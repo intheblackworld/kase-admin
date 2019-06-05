@@ -2,7 +2,7 @@
   <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.mdAndUp" app :value="isDrawerOpen">
     <v-list dense>
       <template v-for="item in items">
-        <v-list-tile @click="$router.push(item.link)" :key="item.title">
+        <v-list-tile @click="$router.push(`/${item.link}`)" :key="item.title">
           <v-list-tile-action active-class>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
