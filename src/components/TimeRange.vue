@@ -56,8 +56,6 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 
-const UsersModule = namespace('users')
-
 @Component
 export default class TimeRange extends Vue {
   @Prop(String) public readonly title!: ''
