@@ -6,7 +6,9 @@ import layouts from './store/layouts'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    token: '',
+  },
   mutations: {},
   actions: {},
 

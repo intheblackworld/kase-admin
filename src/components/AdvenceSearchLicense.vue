@@ -9,7 +9,7 @@
       <v-container>
         <v-layout wrap>
           <v-flex xs12 md4>
-            <v-select v-model="qualification" :items="qualifications" label="資格類別"></v-select>
+            <v-select v-model="qualification" :items="options" label="資格類別"></v-select>
           </v-flex>
 
           <v-flex xs12 md4>
@@ -34,6 +34,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 
 import TimeRange from '@/components/TimeRange.vue'
+import { qualificationCategoryList } from '@/utils/options'
+import { getQualification } from '@/http/apis'
 
 const UsersModule = namespace('users')
 
@@ -49,20 +51,13 @@ export default class AdvenceSearchLicense extends Vue {
   public qualificationStart = ''
   public qualificationEnd = ''
 
-  private qualifications = [
-    {
-      text: '安全管理員',
-      value: '0',
-    },
-    {
-      text: '類別B',
-      value: '1',
-    },
-    {
-      text: '類別C',
-      value: '2',
-    },
-  ]
+  private options = []
+
+  public created() {
+    getQualification().then((data: any) => {
+      this.options = data
+    })
+  }
 
   @Watch('qualificationNo')
   public onChangeQualificationNo(val: string) {

@@ -339,9 +339,14 @@ export const periodList = [
 
 // 資格類別
 export const qualificationCategoryList = [
-  { text: '類別1', value: 0 },
-  { text: '類別2', value: 1 },
-  { text: '類別3', value: 2 },
+  { text: '礦場安全管理員', value: 0 }, // SafeManager
+  { text: '礦場安全管理員', value: 1 }, // (石油及天然氣礦場) SafeManagerOilAndGas
+  { text: '礦場通風管理員', value: 2 }, // VentilationManager
+  { text: '礦場坑內安全督察員', value: 3 }, // InPitSafeInspector
+  { text: '礦場坑外安全督察員', value: 4 }, // OutPitSafeInspector
+  { text: '礦場機電安全督察員', value: 5 }, // ElectromechanicalSafeInspector
+  { text: '礦場安全督察員', value: 6 }, // SafeInspector
+  { text: '其他', value: 7 }, // Other
 ]
 
 // 職務屬性 - 獎懲種類及額度
@@ -422,11 +427,10 @@ export const jobAttrTypeList = [
   }, // 爆破專業人員 ExplosiveExpert
 ]
 
-
 export const legalBasisTypeList = [
-  { text: '法令依據1', value: 0},
-  { text: '法令依據2', value: 1},
-  { text: '法令依據3', value: 2},
-  { text: '法令依據4', value: 3},
-  { text: '法令依據5', value: 4},
+  { text: '法令依據1', value: 0 },
+  { text: '法令依據2', value: 1 },
+  { text: '法令依據3', value: 2 },
+  { text: '法令依據4', value: 3 },
+  { text: '法令依據5', value: 4 },
 ]

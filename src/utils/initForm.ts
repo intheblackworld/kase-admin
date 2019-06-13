@@ -27,7 +27,7 @@ export const incumbentInit = {
   projectName: '',
   libraryNo: '',
   positionTitle: 0,
-  positionClass: 0,
+  positionType: 0,
   employmentNo: '',
   employmentStart: '',
   employmentEnd: '',
@@ -106,7 +106,7 @@ export const createRequestData = {
       projectName: '', // 工程名稱
       libraryNo: '', // 庫號
       positionTitle: 0, // 職稱
-      positionClass: 0, // 職別
+      positionType: 0, // 職別
       employmentNo: '', // 任用通過文號
       employmentStart: '', // 任用通過日期起
       employmentEnd: '', // 任用通過日期訖

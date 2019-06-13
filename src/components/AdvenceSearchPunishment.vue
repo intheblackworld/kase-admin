@@ -9,7 +9,14 @@
       <v-container>
         <v-layout wrap>
           <v-flex xs12 md4>
-            <v-select :items="punishmentTypes" v-model="punishmentType" label="處份類別"></v-select>
+            <v-select
+              :items="rewardOptions"
+              v-model="rewardPunishmentType"
+              multiple
+              label="獎懲種類及額度"
+            ></v-select>
+            <v-select :items="jobOptions" v-model="jobType" multiple label="職務屬性"></v-select>
+            <v-select :items="lawsOptions" v-model="laws" multiple label="法令依據"></v-select>
           </v-flex>
 
           <v-flex xs12 md4>
@@ -33,6 +40,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 
 import TimeRange from '@/components/TimeRange.vue'
+import { getLaws, getReward, getJob } from '@/http/apis'
 
 // 進階搜尋 - 資格證照篩選
 @Component({
@@ -41,29 +49,40 @@ import TimeRange from '@/components/TimeRange.vue'
   },
 })
 export default class AdvenceSearchPunishment extends Vue {
-  public punishmentType = 0
+  public rewardPunishmentType = []
+  public laws = []
+  public jobType = []
   public punishmentNo = '' // 文號
   public punishmentReason = '' // 處分原因
   public punishmentStart = ''
   public punishmentEnd = ''
-  private punishmentTypes = [
-    {
-      text: '處份類別1',
-      value: '0',
-    },
-    {
-      text: '處份類別2',
-      value: '1',
-    },
-    {
-      text: '處份類別3',
-      value: '2',
-    },
-  ]
+  private rewardOptions = []
+  private lawsOptions = []
+  private jobOptions = []
 
-  @Watch('punishmentType')
+  public created() {
+    getLaws().then((data: any) => {
+      this.lawsOptions = data
+    })
+    getReward().then((data: any) => {
+      this.rewardOptions = data
+    })
+    getJob().then((data: any) => {
+      this.jobOptions = data
+    })
+  }
+
+  @Watch('rewardPunishmentType')
   public onChangepunishmentType(val: string) {
-    this.$emit('update:pType', Number(val))
+    this.$emit('update:pType', val)
+  }
+  @Watch('laws')
+  public onChangelaws(val: string) {
+    this.$emit('update:lType', val)
+  }
+  @Watch('jobType')
+  public onChangejobType(val: string) {
+    this.$emit('update:jType', val)
   }
   @Watch('punishmentNo')
   public onChangepunishmentNo(val: string) {

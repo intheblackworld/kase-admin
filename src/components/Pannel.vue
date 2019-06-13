@@ -23,7 +23,6 @@ export default class Pannel extends Vue {
   // state
   @UsersModule.State('name') public name!: string
   @UsersModule.Getter('testGetters') public testGetters!: []
-  @UsersModule.Getter('testMutations') public testMutations!: void
 
 
   public created() {

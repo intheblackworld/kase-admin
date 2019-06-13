@@ -20,16 +20,13 @@
             <v-text-field v-model="resignationNo" label="離職核備文號"></v-text-field>
           </v-flex>
         </v-layout>
-        <v-card-title>職位</v-card-title>
         <v-layout wrap row>
-          <v-checkbox
-            v-for="(p, index) in positionList"
-            v-model="positions"
-            class="mr-4"
-            :key="p"
-            :label="p"
-            :value="index"
-          ></v-checkbox>
+          <v-flex md4>
+            <v-select :items="positionTitleList" label="職稱" multiple v-model="positionTitles"></v-select>
+          </v-flex>
+          <v-flex md4>
+            <v-select :items="positionTypeList" label="職別" multiple v-model="positionTypes"></v-select>
+          </v-flex>
         </v-layout>
         <TimeRange title="任用核備日期" :startDate.sync="employmentStart" :endDate.sync="employmentEnd"/>
         <TimeRange
@@ -50,6 +47,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 
 import TimeRange from '@/components/TimeRange.vue'
+import { positionTitleList } from '@/utils/options'
+import { getPositionType, getPositionTitle } from '@/http/apis'
 
 const UsersModule = namespace('users')
 
@@ -68,21 +67,20 @@ export default class AdvenceSearchHistory extends Vue {
   public resignationStart = ''
   public resignationEnd = ''
 
-  public positions = []
-  private positionList = [
-    '礦場負責人',
-    '礦場安全主管',
-    '安全管理員',
-    '通風管理員',
-    '坑內安全督察員',
-    '坑外安全督察員',
-    '機電安全督察員',
-    '作業人員',
-    '救護隊長',
-    '救護隊員',
-    '爆破專業人員',
-    '爆炸物管理員',
-  ] // 職位
+  public positionTitles = []
+  public positionTypes = []
+  private positionTitleList = []
+  private positionTypeList = []
+
+  public created() {
+    getPositionType().then((data: any) => {
+      this.positionTypeList = data
+    })
+
+    getPositionTitle().then((data: any) => {
+      this.positionTitleList = data
+    })
+  }
 
   @Watch('organization')
   public onChangeorganization(val: string) {
@@ -112,9 +110,14 @@ export default class AdvenceSearchHistory extends Vue {
   public onChangeresignationEnd(val: string) {
     this.$emit('update:rEnd', val)
   }
-  @Watch('positions')
-  public onChangepositions(val: string) {
+  @Watch('positionTitles')
+  public onChangepositionTitles(val: string) {
     this.$emit('update:p', val)
+  }
+
+  @Watch('positionTypes')
+  public onChangepositionTypes(val: string) {
+    this.$emit('update:pt', val)
   }
 }
 </script>
