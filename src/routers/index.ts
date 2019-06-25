@@ -17,37 +17,33 @@ export default new Router({
       path: '/user/:personId',
       name: 'user',
       // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ '@/pages/User.vue'),
+        import(/* webpackChunkName: "user" */ '@/pages/User.vue'),
     },
     {
       path: '/create',
       name: 'create',
       // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ '@/pages/Create.vue'),
+        import(/* webpackChunkName: "create" */ '@/pages/Create.vue'),
     },
     {
       path: '/login',
       name: 'login',
       // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ '@/pages/Login.vue'),
+        import(/* webpackChunkName: "login" */ '@/pages/Login.vue'),
     },
     {
       path: '/search',
       name: 'search',
       // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ '@/pages/Search.vue'),
+        import(/* webpackChunkName: "search" */ '@/pages/Search.vue'),
     },
   ],
 })

@@ -126,7 +126,7 @@ export default class Search extends Vue {
     positionTypes: [], // 職別
 
     /* 資格證照篩選 */
-    qualification: 0, // 資格類別 0 = SafeManager 安全管理員 1 = QualificationB 類別B 2 = QualificationC 類別C
+    qualification: [], // 資格類別 0 = SafeManager 安全管理員 1 = QualificationB 類別B 2 = QualificationC 類別C
     qualificationNo: '', // 證明書字號
     qualificationStart: '', // 發證日起
     qualificationEnd: '', // 發證日訖
@@ -139,7 +139,7 @@ export default class Search extends Vue {
     /* 處分紀錄篩選 */
     rewardPunishmentType: [], // 處分類別
     laws: [],
-    jobType: [],
+    jobTypes: [],
     punishmentNo: '', // 處分文號
     punishmentReason: '', // 處分原因
     punishmentStart: '', // 處分日期起

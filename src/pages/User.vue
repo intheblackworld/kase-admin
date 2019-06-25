@@ -112,7 +112,6 @@ import Table from '@/components/Table.vue'
   },
 })
 export default class User extends Vue {
-
   get incumbentFileRef() {
     return this.$refs.incumbentFileRef as HTMLElement
   }
@@ -182,7 +181,7 @@ export default class User extends Vue {
           key: 'employeeId',
         },
       ],
-      control: 'edit',
+      control: 'create,edit,delete',
     },
     principalOptions: {
       columns: [
@@ -216,7 +215,7 @@ export default class User extends Vue {
           key: 'employeeId',
         },
       ],
-      control: 'edit',
+      control: 'create,edit,delete',
     },
     ambulanceOptions: {
       columns: [
@@ -251,7 +250,7 @@ export default class User extends Vue {
           key: 'employeeId',
         },
       ],
-      control: 'edit',
+      control: 'create,edit,delete',
     },
     blastingOptions: {
       columns: [
@@ -289,7 +288,7 @@ export default class User extends Vue {
           key: 'employeeId',
         },
       ],
-      control: 'edit',
+      control: 'create,edit,delete',
     },
     operatorOptions: {
       columns: [
@@ -320,7 +319,7 @@ export default class User extends Vue {
           key: 'employeeId',
         },
       ],
-      control: 'edit',
+      control: 'create,edit,delete',
     },
     currentJob: {
       data: [],
@@ -345,9 +344,9 @@ export default class User extends Vue {
   private history = {}
 
   public created() {
-    getExperience(this.personId).then((data) => {
-      this.incumbent = Object.assign({}, this.incumbent, data)
-    })
+    // getExperience(this.personId).then((data) => {
+    //   this.incumbent = Object.assign({}, this.incumbent, data)
+    // })
   }
 }
 </script>

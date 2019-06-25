@@ -5,10 +5,20 @@
       <span class="hidden-sm-and-down">人員資料庫</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <div>您好，王小懿</div>
-    <v-btn icon>
-      <v-icon>settings</v-icon>
-    </v-btn>
+    <div>您好</div>
+    <v-menu bottom left>
+      <template v-slot:activator="{ on }">
+        <v-btn dark icon v-on="on">
+          <v-icon>settings</v-icon>
+        </v-btn>
+      </template>
+
+      <v-list>
+        <v-list-tile @click="logout">
+          <v-list-tile-title>登出</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
   </v-toolbar>
 </template>
 
@@ -21,7 +31,11 @@ const LayoutsModule = namespace('layouts')
 @Component
 export default class Header extends Vue {
   @LayoutsModule.Mutation('toggleDrawer') public toggleDrawer!: () => {}
+  @LayoutsModule.Action('logout') public logoutAction!: () => {}
 
+  public logout = () => {
+    this.logoutAction()
+  }
 }
 </script>
 

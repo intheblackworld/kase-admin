@@ -149,10 +149,6 @@ export default class Reward extends mixins(CreateMixin) {
 
   private jobAttrTypeList = jobAttrTypeList
   private legalBasisTypeList = legalBasisTypeList
-
-  public sendData() {
-    this.submit()
-  }
 }
 </script>
 
