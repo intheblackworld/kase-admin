@@ -338,7 +338,7 @@ export const periodList = [
 ]
 
 // 資格類別
-export const qualificationCategoryList = [
+export const qualificationList = [
   { text: '礦場安全管理員', value: 0 }, // SafeManager
   { text: '礦場安全管理員', value: 1 }, // (石油及天然氣礦場) SafeManagerOilAndGas
   { text: '礦場通風管理員', value: 2 }, // VentilationManager
@@ -350,7 +350,7 @@ export const qualificationCategoryList = [
 ]
 
 // 職務屬性 - 獎懲種類及額度
-export const jobAttrTypeList = [
+export const jobAttrList = [
   {
     text: '礦場負責人',
     value: 0,
@@ -427,7 +427,7 @@ export const jobAttrTypeList = [
   }, // 爆破專業人員 ExplosiveExpert
 ]
 
-export const legalBasisTypeList = [
+export const legalBasisList = [
   { text: '法令依據1', value: 0 },
   { text: '法令依據2', value: 1 },
   { text: '法令依據3', value: 2 },

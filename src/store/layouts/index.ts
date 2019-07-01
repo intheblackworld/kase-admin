@@ -3,6 +3,12 @@ import {
   getPositionType,
   getPositionTitle,
   getMineType,
+  getPeriodType,
+  getTrainingType,
+  getQualificationType,
+  getRewardType,
+  getJobType,
+  getLawsType,
   login,
   logout,
 } from '@/http/apis'
@@ -15,6 +21,7 @@ export default {
       positionType: [], // 職別
       positionTitle: [], // 職稱
       mineType: [], // 礦場類別
+      peridType: [],
     },
     token: '',
   },
@@ -56,6 +63,42 @@ export default {
     async getMineType(context: any) {
       getMineType().then((data) => {
         context.commit('setOptions', { data, key: 'mineType' })
+      })
+    },
+
+    async getTrainingType(context: any) {
+      getTrainingType().then((data) => {
+        context.commit('setOptions', { data, key: 'trainingType' })
+      })
+    },
+
+    async getPeriodType(context: any) {
+      getPeriodType().then((data) => {
+        context.commit('setOptions', { data, key: 'periodType' })
+      })
+    },
+
+    async getQualificationType(context: any) {
+      getQualificationType().then((data) => {
+        context.commit('setOptions', { data, key: 'qualificationType' })
+      })
+    },
+
+    async getRewardType(context: any) {
+      getRewardType().then((data) => {
+        context.commit('setOptions', { data, key: 'rewardType' })
+      })
+    },
+
+    async getLawsType(context: any) {
+      getLawsType().then((data) => {
+        context.commit('setOptions', { data, key: 'lawsType' })
+      })
+    },
+
+    async getJobType(context: any) {
+      getJobType().then((data) => {
+        context.commit('setOptions', { data, key: 'jobType' })
       })
     },
 

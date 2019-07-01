@@ -34,8 +34,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 
 import TimeRange from '@/components/TimeRange.vue'
-import { qualificationCategoryList } from '@/utils/options'
-import { getQualification } from '@/http/apis'
+import { qualificationList } from '@/utils/options'
+import { getQualificationType } from '@/http/apis'
 
 const UsersModule = namespace('users')
 
@@ -54,7 +54,7 @@ export default class AdvenceSearchLicense extends Vue {
   private options = []
 
   public created() {
-    getQualification().then((data: any) => {
+    getQualificationType().then((data: any) => {
       this.options = data
     })
   }

@@ -52,19 +52,57 @@
               ></v-select>
             </v-flex>
           </v-layout>
-          <TimeRange
-            title="任用通過日期"
-            :startDate.sync="incumbents[index].employmentStart"
-            :endDate.sync="incumbents[index].employmentEnd"
-          />
+          <v-menu
+            v-model="employmentDateMenu"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                v-model="incumbent.employmentDate"
+                label="任用通過日期"
+                prepend-icon="event"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="incumbent.employmentDate"
+              @input="employmentDateMenu = false;"
+              locale="zh-cn"
+            ></v-date-picker>
+          </v-menu>
           <v-flex xs12 md6>
             <v-text-field v-model="incumbents[index].employmentNo" label="任用通過文號"></v-text-field>
           </v-flex>
-          <TimeRange
-            title="離職通過日期"
-            :startDate.sync="incumbents[index].resignationStart"
-            :endDate.sync="incumbents[index].resignationEnd"
-          />
+          <v-menu
+            v-model="resignationDateMenu"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                v-model="incumbent.resignationDate"
+                label="離職通過日期"
+                prepend-icon="event"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="incumbent.resignationDate"
+              @input="resignationDateMenu = false;"
+              locale="zh-cn"
+            ></v-date-picker>
+          </v-menu>
           <v-flex xs12 md6>
             <v-text-field v-model="incumbents[index].resignationNo" label="離職通過文號"></v-text-field>
           </v-flex>
@@ -89,16 +127,17 @@
         </v-container>
       </v-form>
     </v-card>
-    <div v-if="isShowSteps">
-      <v-btn flat @click="resetCurrentForm(incumbentForm)">清除重填</v-btn>
-      <v-layout align-center justify-end>
+    <div>
+      <v-btn flat v-if="isForCreate" @click="resetCurrentForm(incumbentForm)">清除重填</v-btn>
+      <v-btn flat v-if="!isForCreate" @click="submit(incumbentForm)">送出資料</v-btn>
+      <v-layout align-center justify-end v-if="isForCreate">
         <v-icon @click="addIncumbent">add</v-icon>
         <span>新增一筆</span>
         <v-icon v-if="incumbents.length > 1" @click="deleteIncumbent">delete</v-icon>
         <span v-if="incumbents.length > 1">刪除一筆</span>
       </v-layout>
-      <v-btn color="primary" @click="handleStep(1)">上一步</v-btn>
-      <v-btn color="primary" @click="validateAndNext(3, incumbentForm)">下一步</v-btn>
+      <v-btn color="primary" v-if="isForCreate" @click="handleStep(1)">上一步</v-btn>
+      <v-btn color="primary" v-if="isForCreate" @click="validateAndNext(3, incumbentForm)">下一步</v-btn>
     </div>
   </div>
 </template>
@@ -110,11 +149,11 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 import { mixins } from 'vue-class-component'
-import { mineTypeList,
-  positionTitleList } from '@/utils/options'
+import { mineTypeList, positionTitleList } from '@/utils/options'
 import TimeRange from '@/components/TimeRange.vue'
 import { VForm } from '@/type'
 import CreateMixin from '@/mixins/CreateMixin'
+import { createExperience, getExperience } from '@/http/apis'
 
 const UsersModule = namespace('users')
 
@@ -141,11 +180,9 @@ export default class Incumbent extends mixins(CreateMixin) {
     positionTitle: number // 職稱
     positionType: number // 職別
     employmentNo: string // 任用通過文號
-    employmentStart: string // 任用通過日期起
-    employmentEnd: string // 任用通過日期訖
+    employmentDate: string // 任用通過日期
     resignationNo: string // 離職通過文號
-    resignationStart: string // 離職通過日期起
-    resignationEnd: string // 離職通過日期訖
+    resignationDate: string // 離職通過日期
     certificateNo: string // 證書字號
     incumbentFile: object[] // 附件上傳
     incumbentFileName: string // 附件顯示名稱
@@ -156,8 +193,13 @@ export default class Incumbent extends mixins(CreateMixin) {
   @UsersModule.Mutation('addIncumbent') public addIncumbent!: () => {}
   @UsersModule.Mutation('deleteIncumbent') public deleteIncumbent!: () => {}
 
+  @UsersModule.Mutation('setUserEx') public setUserEx!: (data: any) => {}
+
   private mineTypeList = mineTypeList
   private positionTitleList = positionTitleList
+
+  private employmentDateMenu = false
+  private resignationDateMenu = false
 
   @Watch('incumbents', { immediate: false, deep: true })
   public handleIncumbentPositionType() {
@@ -167,6 +209,37 @@ export default class Incumbent extends mixins(CreateMixin) {
       } else {
         this.incumbents[index].isShowIncumbentPositionTitle = false
       }
+    })
+  }
+
+  private submit() {
+    createExperience({
+      employeeId: this.personId,
+      incumbents: this.incumbents[0],
+    }).then(() => {
+      getExperience(this.personId).then(() => {
+        this.setUserEx([
+          {
+            organization: '',
+            subsidiary: '',
+            mineType: 0,
+            projectName: '',
+            libraryNo: '',
+            positionTitle: 0,
+            employeeResponseId: '',
+            positionType: 0,
+            employmentNo: '',
+            employmentDate: '',
+            resignationNo: '',
+            resignationDate: '',
+            certificateNo: '',
+            incumbentFile: [],
+            incumbentFileName: '',
+            isShowIncumbentPositionTitle: false,
+          },
+        ])
+        this.$emit('finish')
+      })
     })
   }
 }

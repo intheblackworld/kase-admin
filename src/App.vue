@@ -37,6 +37,17 @@ export default class App extends Vue {
 
   @LayoutsModule.Action('getPositionTitle') public getPositionTitle!: () => {}
   @LayoutsModule.Action('getMineType') public getMineType!: () => {}
+  @LayoutsModule.Action('getPeriodType') public getPeriodType!: () => {}
+  @LayoutsModule.Action('getTrainingType') public getTrainingType!: () => {}
+  @LayoutsModule.Action('getQualificationType')
+  public getQualificationType!: () => {}
+
+  @LayoutsModule.Action('getRewardType')
+  public getRewardType!: () => {}
+  @LayoutsModule.Action('getLawsType')
+  public getLawsType!: () => {}
+  @LayoutsModule.Action('getJobType')
+  public getJobType!: () => {}
   @LayoutsModule.Action('login') public login!: () => {}
   private items = [
     { title: '首頁', icon: 'home', link: '/' },
@@ -47,6 +58,12 @@ export default class App extends Vue {
     this.getPositionType()
     this.getPositionTitle()
     this.getMineType()
+    this.getPeriodType()
+    this.getTrainingType()
+    this.getQualificationType()
+    this.getRewardType()
+    this.getJobType()
+    this.getLawsType()
     if (!this.token) {
       this.login()
     }

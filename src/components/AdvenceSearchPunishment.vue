@@ -40,7 +40,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 
 import TimeRange from '@/components/TimeRange.vue'
-import { getLaws, getReward, getJob } from '@/http/apis'
+import { getLawsType, getRewardType, getJobType } from '@/http/apis'
 
 // 進階搜尋 - 資格證照篩選
 @Component({
@@ -61,13 +61,13 @@ export default class AdvenceSearchPunishment extends Vue {
   private jobOptions = []
 
   public created() {
-    getLaws().then((data: any) => {
+    getLawsType().then((data: any) => {
       this.lawsOptions = data
     })
-    getReward().then((data: any) => {
+    getRewardType().then((data: any) => {
       this.rewardOptions = data
     })
-    getJob().then((data: any) => {
+    getJobType().then((data: any) => {
       this.jobOptions = data
     })
   }

@@ -88,15 +88,16 @@
       </v-form>
     </v-card>
     <div v-if="isShowSteps">
-      <v-btn flat @click="resetCurrentForm(trainingForm)">清除重填</v-btn>
-      <v-layout align-center justify-end>
+      <v-btn flat v-if="isForCreate" @click="resetCurrentForm(trainingForm)">清除重填</v-btn>
+      <v-btn flat v-if="!isForCreate" @click="submit(trainingForm)">送出資料</v-btn>
+      <v-layout align-center justify-end v-if="isForCreate">
         <v-icon @click="addTraining">add</v-icon>
         <span>新增一筆</span>
         <v-icon v-if="trainings.length > 1" @click="deleteTraining">delete</v-icon>
         <span v-if="trainings.length > 1">刪除一筆</span>
       </v-layout>
-      <v-btn color="primary" @click="handleStep(2)">上一步</v-btn>
-      <v-btn color="primary" @click="validateAndNext(4, trainingForm, true)">下一步</v-btn>
+      <v-btn color="primary" v-if="isForCreate" @click="handleStep(2)">上一步</v-btn>
+      <v-btn color="primary" v-if="isForCreate" @click="validateAndNext(4, trainingForm, true)">下一步</v-btn>
     </div>
   </div>
 </template>
@@ -113,6 +114,7 @@ import TimeRange from '@/components/TimeRange.vue'
 import { positionTrainingList, periodList } from '@/utils/options'
 import { VForm } from '@/type'
 import CreateMixin from '@/mixins/CreateMixin'
+import { createTraining, getTraining } from '@/http/apis'
 
 const UsersModule = namespace('users')
 
@@ -122,7 +124,6 @@ const UsersModule = namespace('users')
   },
 })
 export default class Training extends mixins(CreateMixin) {
-
   get trainingForm(): VForm {
     return this.$refs.trainingForm as VForm
   }
@@ -148,6 +149,10 @@ export default class Training extends mixins(CreateMixin) {
 
   @UsersModule.Mutation('addTraining') public addTraining!: () => {}
   @UsersModule.Mutation('deleteTraining') public deleteTraining!: () => {}
+
+  @UsersModule.Mutation('setUserTraining') public setUserTraining!: (
+    data: any,
+  ) => {}
 
   private positionTrainingList = positionTrainingList
   private periodList = periodList
@@ -179,6 +184,35 @@ export default class Training extends mixins(CreateMixin) {
       } else {
         currentTraining.isShowCustomPeriodSelect = false
       }
+    })
+  }
+
+  private submit() {
+    createTraining({
+      employeeId: this.personId,
+      trainings: this.trainings[0],
+    }).then(() => {
+      getTraining(this.personId).then(() => {
+        this.setUserTraining([
+          {
+            organization: '', // 任職單位
+            subsidiary: '', // 附屬單位
+            positionTrainingType: 0, // 課程種類
+            mineType: 0, // 礦場類別
+            trainingType: 0, // 訓練課程類別
+            employeeResponseId: '',
+            years: 0, // 年度
+            periodType: 0, // 期別 3: 自訂期次 1, 4: 自訂期次 2, 5: 自訂期次 3 依此類推
+            customPeriod: 0,
+            trainingStart: '', // 訓練起始日期
+            trainingEnd: '', // 訓練結束日期
+            trainingFile: [], // 附件上傳
+            trainingFileName: '', // 附件顯示名稱
+            isShowCustomPeriodSelect: false, // 是否顯示自訂期次下拉選單
+          },
+        ])
+        this.$emit('finish')
+      })
     })
   }
 }

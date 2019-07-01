@@ -23,6 +23,7 @@ export default {
       mailingAddress: '',
       mobile: '',
       email: '',
+      employeeResponseId: '',
       phones: [''],
       educationLevel: 0,
       educationOther: '',
@@ -42,13 +43,12 @@ export default {
         projectName: '',
         libraryNo: '',
         positionTitle: 0,
+        employeeResponseId: '',
         positionType: 0,
         employmentNo: '',
-        employmentStart: '',
-        employmentEnd: '',
+        employmentDate: '',
         resignationNo: '',
-        resignationStart: '',
-        resignationEnd: '',
+        resignationDate: '',
         certificateNo: '',
         incumbentFile: [],
         incumbentFileName: '',
@@ -63,6 +63,7 @@ export default {
         positionTrainingType: 0, // 課程種類
         mineType: 0, // 礦場類別
         trainingType: 0, // 訓練課程類別
+        employeeResponseId: '',
         years: 0, // 年度
         periodType: 0, // 期別 3: 自訂期次 1, 4: 自訂期次 2, 5: 自訂期次 3 依此類推
         customPeriod: 0,
@@ -76,19 +77,19 @@ export default {
 
     qualifications: [
       {
-        qualificationCategory: 0, // 資格類別
+        qualification: 0, // 資格類別
         certificateNo: '', // 證明書字號
         compliance: '', // 符合條款
         issueDate: '', // 發證日期
-        qualificationFile: [], // 附件上傳
+        otherAttaches: [], // 附件上傳
         qualificationFileName: '',
       },
     ],
     rewards: [
       {
-        jobAttrType: 0, // 職務屬性
+        jobAttr: 0, // 職務屬性
         rewardType: 0, // 獎懲種類及額度
-        legalBasisType: 0, // 法令依據
+        legalBasis: 0, // 法令依據
         rewardDate: '', // 獎懲日期
         rewardDesc: '', // 獎懲事實
         rewardFile: [], // 附件上傳
@@ -129,9 +130,24 @@ export default {
       }, 1500)
     },
 
-    getUserBasic(state: { basic: { phones: [] } }, data: any) {
+    setUserBasic(state: { basic: { phones: [] } }, data: any) {
       state.basic = Object.assign({}, state.basic, data)
       state.basic.phones = []
+    },
+
+    setUserEx(state: { incumbents: [] }, data: []) {
+      state.incumbents = data
+    },
+    setUserTraining(state: { trainings: [] }, data: []) {
+      state.trainings = data
+    },
+
+    setUserQu(state: { qualifications: [] }, data: []) {
+      state.qualifications = data
+    },
+
+    setUserReward(state: { rewards: [] }, data: []) {
+      state.rewards = data
     },
 
     addIncumbent(state: { incumbents: object[] }) {
@@ -144,11 +160,9 @@ export default {
         positionTitle: 0,
         positionType: 0,
         employmentNo: '',
-        employmentStart: '',
-        employmentEnd: '',
+        employmentDate: '',
         resignationNo: '',
-        resignationStart: '',
-        resignationEnd: '',
+        resignationDate: '',
         certificateNo: '',
         incumbentFile: [],
         incumbentFileName: '',
@@ -183,11 +197,11 @@ export default {
     },
     addQualification(state: { qualifications: object[] }) {
       state.qualifications.push({
-        qualificationCategory: 0, // 資格類別
+        qualification: 0, // 資格類別
         certificateNo: '', // 證明書字號
         compliance: '', // 符合條款
         issueDate: '', // 發證日期
-        qualificationFile: [], // 附件上傳
+        otherAttaches: [], // 附件上傳
         qualificationFileName: '',
       })
     },
@@ -198,9 +212,9 @@ export default {
 
     addReward(state: { rewards: object[] }) {
       state.rewards.push({
-        jobAttrType: 0, // 職務屬性
+        jobAttr: 0, // 職務屬性
         rewardType: 0, // 獎懲種類及額度
-        legalBasisType: 0, // 法令依據
+        legalBasis: 0, // 法令依據
         rewardDate: '', // 獎懲日期
         rewardDesc: '', // 獎懲事實
         rewardFile: [], // 附件上傳

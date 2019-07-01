@@ -586,8 +586,8 @@
             </v-layout>
           </v-container>
         </v-form>
-        <v-btn @click="isEditable = true">編輯資料</v-btn>
-        <v-btn @click="isEditable = false">回復資料</v-btn>
+        <v-btn v-if="!isEditable" @click="toggleEdit">編輯資料</v-btn>
+        <v-btn v-if="isEditable" @click="submit">完成</v-btn>
       </v-card>
     </div>
   </div>
@@ -604,7 +604,7 @@ import { educationLevelList } from '@/utils/options'
 import TimeRange from '@/components/TimeRange.vue'
 import { VForm } from '@/type'
 import CreateMixin from '@/mixins/CreateMixin'
-import { getPersonDetail } from '@/http/apis'
+import { getBasic, updateUserBasic } from '@/http/apis'
 
 const UsersModule = namespace('users')
 
@@ -654,7 +654,7 @@ export default class Basic extends mixins(CreateMixin) {
   }
 
   @UsersModule.Mutation('addPhone') public addPhone!: () => {}
-  @UsersModule.Mutation('getUserBasic') public getUserBasic!: (data: any) => {}
+  @UsersModule.Mutation('setUserBasic') public setUserBasic!: (data: any) => {}
 
   private birthdayMenu = false
   private deathDateMenu = false
@@ -674,8 +674,8 @@ export default class Basic extends mixins(CreateMixin) {
 
   public mounted() {
     if (this.personId) {
-      getPersonDetail(this.personId).then((data) => {
-        this.getUserBasic(data)
+      getBasic(this.personId).then((data) => {
+        this.setUserBasic(data)
       })
     }
 
@@ -698,6 +698,21 @@ export default class Basic extends mixins(CreateMixin) {
     if (this.isSameAdress) {
       this.basic.mailingAddress = this.basic.permanentAddress
     }
+  }
+
+  private toggleEdit() {
+    this.isEditable = !this.isEditable
+  }
+
+  private submit() {
+    updateUserBasic({ employeeId: this.personId, basic: this.basic }).then(
+      () => {
+        getBasic(this.personId).then((data) => {
+          this.setUserBasic(data)
+          this.isEditable = false
+        })
+      },
+    )
   }
 }
 </script>

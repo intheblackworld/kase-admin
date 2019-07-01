@@ -29,11 +29,9 @@ export const incumbentInit = {
   positionTitle: 0,
   positionType: 0,
   employmentNo: '',
-  employmentStart: '',
-  employmentEnd: '',
+  employmentDate: '',
   resignationNo: '',
-  resignationStart: '',
-  resignationEnd: '',
+  resignationDate: '',
   certificateNo: '',
   incumbentFile: [],
   incumbentFileName: '',
@@ -57,18 +55,18 @@ export const trainingInit = {
 }
 
 export const qualificationInit = {
-  qualificationCategory: 0, // 資格類別
+  qualification: 0, // 資格類別
   certificateNo: '', // 證明書字號
   compliance: '', // 符合條款
   issueDate: '', // 發證日期
-  qualificationFile: [], // 附件上傳
+  otherAttaches: [], // 附件上傳
   qualificationFileName: '',
 }
 
 export const rewardInit = {
-  jobAttrType: 0, // 職務屬性
+  jobAttr: 0, // 職務屬性
   rewardType: 0, // 獎懲種類及額度
-  legalBasisType: 0, // 法令依據
+  legalBasis: 0, // 法令依據
   rewardDate: '', // 獎懲日期
   rewardDesc: '', // 獎懲事實
   rewardFile: [], // 附件上傳
@@ -134,11 +132,11 @@ export const createRequestData = {
   ],
   qualifications: [
     {
-      qualificationCategory: 0, // 資格類別
+      qualification: 0, // 資格類別
       certificateNo: '', // 證明書字號
       compliance: '', // 符合條款
       issueDate: '', // 發證日期
-      qualificationFile: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
+      otherAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
     },
   ],
   rewards: [
