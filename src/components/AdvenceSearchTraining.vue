@@ -28,7 +28,7 @@ import TimeRange from '@/components/TimeRange.vue'
 
 import { positionTrainingList } from '@/utils/options'
 
-import { getTrainingOptions } from '@/http/apis'
+import { getTrainingType } from '@/http/apis'
 
 // 進階搜尋 - 任職經歷篩選
 @Component({
@@ -44,7 +44,7 @@ export default class AdvenceSearchTraining extends Vue {
   private options: [] = []
 
   public created() {
-    getTrainingOptions().then((data: any) => {
+    getTrainingType().then((data: any) => {
       this.options = data
     })
   }
