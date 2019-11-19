@@ -5,8 +5,11 @@ import axios from 'axios'
 import QS from 'qs'
 import router from '@/routers'
 import store from '@/store'
+// const devApi = 'https://www.kase.com.tw/MOEA_People/'
+const devApi = 'https://mims.mine.gov.tw/MinePeopleBackend/'
+const prdApi = 'http://mims.mine.gov.tw/MinePeopleBackend'
 
-const baseURL = 'https://www.kase.com.tw/MOEA_People/'
+const baseURL = process.env.NODE_ENV === 'development' ? devApi : prdApi
 
 // 环境的切换
 // if (process.env.NODE_ENV === 'development') {
@@ -29,11 +32,13 @@ axios.defaults.headers.post['Content-Type'] =
 // 请求拦截器
 axios.interceptors.request.use(
   (config) => {
+
     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-    const token = store.state.token
+    // tslint:disable-next-line: no-unused-expression
+    const token = store.state.layouts.token
 // tslint:disable-next-line: no-unused-expression
-    token && (config.headers.Authorization = token)
+    token && (config.headers.Authorization = `Bearer ${token}`)
     return config
   },
   (error) => {
@@ -57,6 +62,8 @@ axios.interceptors.response.use(
         // 401: 未登录
         // 未登录则跳转登录页面，并携带当前页面的路径
         // 在登录成功后返回当前页面，这一步需要在登录页操作。
+        case 400:
+          window.alert(error.response)
         case 401:
           router.replace({
             path: '/login',

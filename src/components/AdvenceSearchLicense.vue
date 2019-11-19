@@ -9,7 +9,7 @@
       <v-container>
         <v-layout wrap>
           <v-flex xs12 md4>
-            <v-select v-model="qualification" :items="options" label="資格類別"></v-select>
+            <v-select v-model="qualification" multiple :items="options" label="資格類別"></v-select>
           </v-flex>
 
           <v-flex xs12 md4>
@@ -17,7 +17,7 @@
           </v-flex>
         </v-layout>
         <TimeRange
-          title="發證日期"
+          title="發證日期(西元)"
           :startDate.sync="qualificationStart"
           :endDate.sync="qualificationEnd"
         />
@@ -34,7 +34,6 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 
 import TimeRange from '@/components/TimeRange.vue'
-import { qualificationList } from '@/utils/options'
 import { getQualificationType } from '@/http/apis'
 
 const UsersModule = namespace('users')
@@ -47,7 +46,7 @@ const UsersModule = namespace('users')
 })
 export default class AdvenceSearchLicense extends Vue {
   public qualificationNo = ''
-  public qualification = 0
+  public qualification = []
   public qualificationStart = ''
   public qualificationEnd = ''
 
@@ -64,8 +63,8 @@ export default class AdvenceSearchLicense extends Vue {
     this.$emit('update:qNo', val)
   }
   @Watch('qualification')
-  public onChangeQualification(val: string) {
-    this.$emit('update:q', Number(val))
+  public onChangeQualification(val: []) {
+    this.$emit('update:q', val)
   }
   @Watch('qualificationStart')
   public onChangeQualificationStart(val: string) {

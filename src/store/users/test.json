@@ -1,0 +1,70 @@
+{
+  "basic": {
+    "name": "test",
+    "personStatus": 0,
+    "personNo": "S124118283",
+    "cardNo": "123123123",
+    "birthday": "2019-08-01",
+    "permanentAddress": "teststst",
+    "mobile": "testsetet",
+    "employeeResponseId": "",
+    "phones": [
+      null
+    ],
+    "educationOther": "",
+    "identityAttaches": [],
+    "educationAttaches": [],
+    "otherAttaches": []
+  },
+  "incumbents": [
+    {
+      "organization": "testetset",
+      "subsidiary": "testetsets",
+      "mineType": 0,
+      "projectName": "",
+      "libraryNo": "",
+      "positionTitle": 0,
+      "employeeResponseId": "",
+      "positionType": 0,
+      "isAgent": false,
+      "employmentNo": "",
+      "employmentDate": "2019-08-01",
+      "resignationNo": "",
+      "resignationDate": "",
+      "certificateNo": "",
+      "otherAttaches": [],
+      "otherAttachesName": "",
+      "isShowIncumbentPositionTitle": false
+    }
+  ],
+  "trainings": [
+    {
+      "organization": "testesetset",
+      "subsidiary": "tsetestsetset",
+      "positionTrainingType": 0,
+      "mineType": 0,
+      "trainingType": 0,
+      "employeeResponseId": "",
+      "isParticipate": false,
+      "years": "",
+      "periodType": null,
+      "customPeriod": null,
+      "trainingStart": "2019-08-01",
+      "trainingEnd": "",
+      "otherAttaches": [],
+      "otherAttachesName": "",
+      "isShowCustomPeriodSelect": false
+    }
+  ],
+  "qualifications": [
+    {
+      "qualification": 0,
+      "certificateNo": "",
+      "compliance": "",
+      "issueDate": "2019-08-01",
+      "otherAttaches": [],
+      "qualificationFileName": ""
+    }
+  ],
+  "rewards": null
+}

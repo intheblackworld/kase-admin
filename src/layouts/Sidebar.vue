@@ -2,7 +2,7 @@
   <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.mdAndUp" app :value="isDrawerOpen">
     <v-list dense>
       <template v-for="item in items">
-        <v-list-tile @click="$router.push(`/${item.link}`)" :key="item.title">
+        <v-list-tile @click="$router.push(`${item.link}`)" :key="item.title">
           <v-list-tile-action active-class>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -18,13 +18,28 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch, Emit } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
+import { mapState } from 'vuex'
 
 const LayoutsModule = namespace('layouts')
 
-@Component
+@Component({
+  computed: mapState('layouts', {
+    isDrawerOpen: (state: any) => {
+      return state.isDrawerOpen
+      // if (state.options.outer) {
+      //   return state.options.outer.items.map((item: any) => ({
+      //     text: `${item.areaName.trim()}(${item.areaNo.trim()})`,
+      //     value: `${item.areaName.trim()}(${item.areaNo.trim()})`,
+      //   }))
+      // } else {
+      //   return []
+      // }
+    },
+  }),
+})
 export default class Sidebar extends Vue {
   @Prop(Array) public readonly items!: []
-  @LayoutsModule.State('isDrawerOpen') public isDrawerOpen!: boolean
+  // @LayoutsModule.State('isDrawerOpen') public isDrawerOpen: boolean = true
 }
 </script>
 

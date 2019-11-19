@@ -1,6 +1,5 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
-
 import { VForm } from '@/type'
 
 const UsersModule = namespace('users')
@@ -18,7 +17,94 @@ export default class CreateMixin extends Vue {
   }
 
   public rules = {
-    required: (value: string) => !!value || '此欄位必填',
+    required: (value: string | number) =>
+      typeof value === 'number' ? !!value.toString() : !!value || '此欄位必填',
+    checkID: (value: string) =>
+      this.checkID(value) || '身分證格式有誤(英文字母大寫)',
+  }
+
+  public checkID(id: string) {
+    if (!id) { return }
+    const tab = 'ABCDEFGHJKLMNPQRSTUVXYWZIO'
+    const A1 = new Array(
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+    )
+    const A2 = new Array(
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+    )
+    const Mx = new Array(9, 8, 7, 6, 5, 4, 3, 2, 1, 1)
+
+    if (id.length !== 10) {
+      return false
+    }
+    let i = tab.indexOf(id.charAt(0))
+    if (i === -1) {
+      return false
+    }
+    let sum = A1[i] + A2[i] * 9
+
+    for (i = 1; i < 10; i++) {
+      // tslint:disable-next-line: radix
+      const v = parseInt(id.charAt(i))
+      if (isNaN(v)) {
+        return false
+      }
+      sum = sum + v * Mx[i]
+    }
+    if (sum % 10 !== 0) {
+      return false
+    }
+    return true
   }
 
   public validateAndNext(step: number, form: VForm | VForm[]) {
@@ -39,6 +125,10 @@ export default class CreateMixin extends Vue {
         this.handleStep(step)
       }
     }
+  }
+
+  public skipAndNext(step: number) {
+    this.handleStep(step)
   }
 
   public resetCurrentForm(forms: VForm | VForm[]) {

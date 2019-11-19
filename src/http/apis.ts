@@ -32,33 +32,56 @@ export const deleteQualification = (data: object) =>
 // 獎懲紀錄
 export const getReward = (employeeId: string) =>
   get(`api/reward/${employeeId}`, {})
-export const createReward = (data: object) =>
-  post('/api/reward/insert', data)
-export const deleteReward = (data: object) =>
-  post('/api/reward/delete', data)
+export const createReward = (data: object) => post('/api/reward/insert', data)
+export const deleteReward = (data: object) => post('/api/reward/delete', data)
+
+// 編修紀錄
+export const getLog = (data: object) => post('/api/editingLog/search', data)
+export const getPersonDiff = (id: string) => get(`/api/person/diff/${id}`, {})
+export const getIncumbentDiff = (id: string) =>
+  get(`/api/experience/diff/${id}`, {})
+export const getTrainingDiff = (id: string) =>
+  get(`/api/training/diff/${id}`, {})
+export const getQualificationDiff = (id: string) =>
+  get(`/api/qualification/diff/${id}`, {})
+export const getRewardDiff = (id: string) => get(`/api/reward/diff/${id}`, {})
 
 // options
 export const getPositionType = () => get('/api/OptionPositionType', {})
-export const getPositionTitle = () => get('/api/OptionPositionTitle', {})
+export const getPositionTitle = () =>
+  get('/api/OptionPositionTitle_NoExplosive', {})
+export const getPositionTitleForSearch = () =>
+  get('/api/OptionPositionTitle', {})
 export const getMineType = () => get('/api/OptionMineType', {})
+export const getEducationLevel = () => get('/api/OptionEducationLevel', {})
+export const getGender = () => get('/api/OptionGender', {})
 
 export const getTrainingType = () => get('/api/OptionTrainingType', {})
+export const getPersonStatus = () => get('/api/OptionPersonStatus', {})
 
 export const getPeriodType = () => get('/api/OptionPeriodType', {})
-
 
 export const getQualificationType = () => get('/api/OptionQualification', {})
 
 export const getLawsType = () => get('/api/OptionLegalBasis', {})
+export const getLawsDescType = () => get('/api/RewardDesc', {})
 export const getRewardType = () => get('/api/OptionRewardType', {})
-export const getJobType = () => get('/api/OptionJobType', {})
+export const getJobType = () => get('/api/OptionJobType_NoExplosive', {})
+export const getJobTypeForSearch = () => get('/api/OptionJobType', {})
 
-export const create = (data: object) => post('/api/person/insert', data)
+export const getEditType = () => get('/api/OptionEditingCategory', {})
+
+export const create = (data: any) => post('/api/person/insert', data)
 
 export const search = (req: object) => post(`api/person/search`, req)
 
+// const authUrl = 'https://www.kase.com.tw/MOEA_Auth/'
+const authUrl = 'https://mims.mine.gov.tw/AuthService/'
+// const outerUrl = 'https://www.kase.com.tw/MOEA_MIMS/'
+const outerUrl = 'https://mims.mine.gov.tw/MineMIMSBackend/'
+
 export const login = () =>
-  post('https://www.kase.com.tw/MOEA_Auth/api/login/', {
+  post(`${authUrl}api/login/`, {
     'nameid': 'aallom4j',
     'given_name': 'Adriena Allom',
     'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': [
@@ -73,4 +96,14 @@ export const login = () =>
   })
 
 export const logout = () =>
-  get('https://www.kase.com.tw/MOEA_Auth/api/logout/', {})
+  get(`${authUrl}api/logout/`, {})
+
+export const getOuterData = () =>
+  post(`${outerUrl}api/mining-area-to-people`, {})
+
+// 檢驗卡號身分證
+export const hasCardNo = (cardNo: string, employeeId: string) =>
+  post('/api/person/hasCardNo', { cardNo, employeeId})
+
+export const hasPersonNo = (personNo: string, employeeId: string) =>
+  post('/api/person/hasPersonNo', { personNo, employeeId })

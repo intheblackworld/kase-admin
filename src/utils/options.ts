@@ -59,7 +59,7 @@ export const positionTitleList = [
   { text: '坑內安全督察員', value: 4 }, // InPitSafeInspector
   { text: '坑外安全督察員', value: 5 }, // OutPitSafeInspector
   { text: '機電安全督察員', value: 6 }, // ElectromechanicalSafeInspector
-  { text: '作業人員', value: 7 }, // Operator * 當選擇這個職稱時，可以選擇職別
+  { text: '礦場作業人員', value: 7 }, // Operator * 當選擇這個職稱時，可以選擇職別
   { text: '救護隊長', value: 8 }, // AmbulanceCaptain
   { text: '救護隊整備員', value: 9 }, // AmbulanceMaintener
   { text: '救護隊事務員', value: 10 }, // AmbulanceAssistant
@@ -85,57 +85,35 @@ export const mineTypeList = [
       { text: '機車駕駛及保養人員', value: 4 },
       { text: '爆破作業人員', value: 5 },
       { text: '其他坑內作業人員', value: 6 },
+      { text: '坑外作業人員', value: 7 },
     ],
   },
   {
     text: '露天礦場', // OpenPit
     value: 1,
     positionClassList: [
-      { text: '採礦機械設備之裝設、操作、保養及修理人員', value: 0 },
-      { text: '鏟裝機械設備之裝設、操作、保養及修理人員', value: 1 },
-      { text: '搬運機械設備之裝設、操作、保養及修理人員', value: 2 },
-      { text: '電機與機械設備之裝設、操作、保養及修理人員', value: 3 },
-      { text: '爆破作業人員', value: 4 },
-      { text: '其他作業人員', value: 5 },
+      { text: '採礦機械設備之裝設、操作、保養及修理人員', value: 8 },
+      { text: '鏟裝機械設備之裝設、操作、保養及修理人員', value: 9 },
+      { text: '搬運機械設備之裝設、操作、保養及修理人員', value: 10 },
+      { text: '電機與機械設備之裝設、操作、保養及修理人員', value: 11 },
+      { text: '爆破作業人員', value: 12 },
+      { text: '其他作業人員', value: 13 },
     ],
   },
   {
     text: '石油與天然氣礦場', // OilAndGas
     value: 2,
     positionClassList: [
-      { text: '測勘作業人員', value: 0 },
-      { text: '鑽井作業人員', value: 1 },
-      { text: '油氣生產作業人員', value: 2 },
-      { text: '油氣處理作業人員', value: 3 },
-      { text: '機械作業人員', value: 4 },
-      { text: '電機作業人員', value: 5 },
-      { text: '其他作業人員', value: 6 },
-    ],
-  },
-  {
-    text: '地下礦場（煤礦）', // UnderGroundCoal
-    value: 3,
-    positionClassList: [
-      { text: '電機設備之裝設、保養及修理人員', value: 0 },
-      { text: '電機設備之裝設、保養及修理人員', value: 1 },
-      { text: '壓風機、抽水機、扇風機操作人員', value: 2 },
-      { text: '押車作業人員', value: 3 },
-      { text: '機車駕駛及保養人員', value: 4 },
-      { text: '爆破作業人員', value: 5 },
-      { text: '其他坑內作業人員', value: 6 },
-    ],
-  },
-  {
-    text: '地下礦場（煤礦以外礦場）', // UnderGroundNotCoal
-    value: 4,
-    positionClassList: [
-      { text: '電機設備之裝設、保養及修理人員', value: 0 },
-      { text: '電機設備之裝設、保養及修理人員', value: 1 },
-      { text: '壓風機、抽水機、扇風機操作人員', value: 2 },
-      { text: '押車作業人員', value: 3 },
-      { text: '機車駕駛及保養人員', value: 4 },
-      { text: '爆破作業人員', value: 5 },
-      { text: '其他坑內作業人員', value: 6 },
+      { text: '測勘作業人員', value: 14 },
+      { text: '鑽井作業人員', value: 15 },
+      { text: '油氣生產作業人員', value: 16 },
+      { text: '油氣處理作業人員', value: 17 },
+      { text: '機械作業人員', value: 18 },
+      { text: '電機作業人員', value: 19 },
+      { text: '爆破作業人員', value: 20 },
+      { text: '其他作業人員', value: 21 },
+      { text: '無資料', value: 998 },
+      { text: '其他', value: 999 },
     ],
   },
 ]
@@ -166,56 +144,56 @@ export const positionTrainingList = [
         trainingList: [
           {
             text: '採礦機械設備之裝設、操作、保養及修理人員-在職訓練',
-            value: 0,
+            value: 8,
           },
           {
             text: '鏟裝機械設備之裝設、操作、保養及修理人員-在職訓練',
-            value: 1,
+            value: 9,
           },
           {
             text: '搬運機械設備之裝設、操作、保養及修理人員-在職訓練',
-            value: 2,
+            value: 10,
           },
           {
             text: '電機與機械設備之裝設、操作、保養及修理人員-在職訓練',
-            value: 3,
+            value: 11,
           },
-          { text: '爆破作業人員-在職訓練', value: 4 },
-          { text: '其他作業人員-在職訓練', value: 5 },
+          { text: '爆破作業人員-在職訓練', value: 12 },
+          { text: '其他作業人員-在職訓練', value: 13 },
         ],
       },
       {
         text: '石油天然氣礦場',
         value: 2,
         trainingList: [
-          { text: '測勘作業人員-在職訓練', value: 0 },
-          { text: '鑽井作業人員-在職訓練', value: 1 },
-          { text: '油氣生產作業人員-在職訓練', value: 2 },
-          { text: '油氣處理作業人員-在職訓練', value: 3 },
-          { text: '機械作業人員-在職訓練', value: 4 },
-          { text: '電機作業人員-在職訓練', value: 5 },
-          { text: '爆破作業人員-在職訓練', value: 6 },
-          { text: '其他作業人員-在職訓練', value: 7 },
+          { text: '測勘作業人員-在職訓練', value: 14 },
+          { text: '鑽井作業人員-在職訓練', value: 15 },
+          { text: '油氣生產作業人員-在職訓練', value: 16 },
+          { text: '油氣處理作業人員-在職訓練', value: 17 },
+          { text: '機械作業人員-在職訓練', value: 18 },
+          { text: '電機作業人員-在職訓練', value: 19 },
+          { text: '爆破作業人員-在職訓練', value: 20 },
+          { text: '其他作業人員-在職訓練', value: 21 },
         ],
       },
     ],
   },
   {
-    text: '作業人員職前訓練',
+    text: '新進作業人員職前訓練',
     value: 1,
     mineTypeList: [
       {
         text: '地下礦場',
         value: 0,
         trainingList: [
-          { text: '電機設備之裝設、保養及修理人員-職前訓練', value: 0 },
-          { text: '捲揚機操作人員-職前訓練', value: 1 },
-          { text: '壓風機、抽水機、扇風機操作人員-職前訓練', value: 2 },
-          { text: '押車作業人員-職前訓練', value: 3 },
-          { text: '機車駕駛及保養人員-職前訓練', value: 4 },
-          { text: '爆破作業人員-職前訓練', value: 5 },
-          { text: '其他坑內作業人員-職前訓練', value: 6 },
-          { text: '坑外作業人員-職前訓練', value: 7 },
+          { text: '電機設備之裝設、保養及修理人員-職前訓練', value: 22 },
+          { text: '捲揚機操作人員-職前訓練', value: 23 },
+          { text: '壓風機、抽水機、扇風機操作人員-職前訓練', value: 24 },
+          { text: '押車作業人員-職前訓練', value: 25 },
+          { text: '機車駕駛及保養人員-職前訓練', value: 26 },
+          { text: '爆破作業人員-職前訓練', value: 27 },
+          { text: '其他坑內作業人員-職前訓練', value: 28 },
+          { text: '坑外作業人員-職前訓練', value: 29 },
         ],
       },
       {
@@ -224,36 +202,36 @@ export const positionTrainingList = [
         trainingList: [
           {
             text: '採礦機械設備之裝設、操作、保養及修理人員-職前訓練',
-            value: 0,
+            value: 30,
           },
           {
             text: '鏟裝機械設備之裝設、操作、保養及修理人員-職前訓練',
-            value: 1,
+            value: 31,
           },
           {
             text: '搬運機械設備之裝設、操作、保養及修理人員-職前訓練',
-            value: 2,
+            value: 32,
           },
           {
             text: '電機與機械設備之裝設、操作、保養及修理人員-職前訓練',
-            value: 3,
+            value: 33,
           },
-          { text: '爆破作業人員-職前訓練', value: 4 },
-          { text: '其他作業人員-職前訓練', value: 5 },
+          { text: '爆破作業人員-職前訓練', value: 34 },
+          { text: '其他作業人員-職前訓練', value: 35 },
         ],
       },
       {
         text: '石油天然氣礦場',
         value: 2,
         trainingList: [
-          { text: '測勘作業人員-職前訓練', value: 0 },
-          { text: '鑽井作業人員-職前訓練', value: 1 },
-          { text: '油氣生產作業人員-職前訓練', value: 2 },
-          { text: '油氣處理作業人員-職前訓練', value: 3 },
-          { text: '機械作業人員-職前訓練', value: 4 },
-          { text: '電機作業人員-職前訓練', value: 5 },
-          { text: '爆破作業人員-職前訓練', value: 6 },
-          { text: '其他作業人員-職前訓練', value: 7 },
+          { text: '測勘作業人員-職前訓練', value: 36 },
+          { text: '鑽井作業人員-職前訓練', value: 37 },
+          { text: '油氣生產作業人員-職前訓練', value: 38 },
+          { text: '油氣處理作業人員-職前訓練', value: 39 },
+          { text: '機械作業人員-職前訓練', value: 40 },
+          { text: '電機作業人員-職前訓練', value: 41 },
+          { text: '爆破作業人員-職前訓練', value: 42 },
+          { text: '其他作業人員-職前訓練', value: 43 },
         ],
       },
     ],
@@ -266,19 +244,19 @@ export const positionTrainingList = [
         text: '地下礦場',
         value: 0,
         trainingList: [
-          { text: '地下礦場(煤礦場)-在職救護隊訓練', value: 0 },
-          { text: '地下礦場(煤以外礦場)-在職救護隊訓練', value: 1 },
+          { text: '地下礦場(煤礦場)-在職救護隊訓練', value: 44 },
+          { text: '地下礦場(煤以外礦場)-在職救護隊訓練', value: 45 },
         ],
       },
       {
         text: '露天礦場',
         value: 1,
-        trainingList: [{ text: '露天礦場-在職救護隊訓練', value: 1 }],
+        trainingList: [{ text: '露天礦場-在職救護隊訓練', value: 46 }],
       },
       {
         text: '石油天然氣礦場',
         value: 2,
-        trainingList: [{ text: '石油、天然氣礦場-在職救護隊訓練', value: 1 }],
+        trainingList: [{ text: '石油、天然氣礦場-在職救護隊訓練', value: 47 }],
       },
     ],
   },
@@ -290,19 +268,18 @@ export const positionTrainingList = [
         text: '地下礦場',
         value: 0,
         trainingList: [
-          { text: '地下礦場(煤礦場)-新任救護隊訓練', value: 0 },
-          { text: '地下礦場(煤以外礦場)-新任救護隊訓練', value: 1 },
+          { text: '地下礦場-新任救護隊員基礎訓練', value: 48 },
         ],
       },
       {
         text: '露天礦場',
         value: 1,
-        trainingList: [{ text: '露天礦場-新任救護隊訓練', value: 1 }],
+        trainingList: [{ text: '露天礦場-新任救護隊訓練', value: 49 }],
       },
       {
         text: '石油天然氣礦場',
         value: 2,
-        trainingList: [{ text: '石油、天然氣礦場-新任救護隊訓練', value: 1 }],
+        trainingList: [{ text: '石油、天然氣礦場-新任救護隊訓練', value: 50 }],
       },
     ],
   },
@@ -313,17 +290,17 @@ export const positionTrainingList = [
       {
         text: '地下礦場',
         value: 0,
-        trainingList: [{ text: '作業人員調訓', value: 0 }],
+        trainingList: [{ text: '作業人員調訓', value: 51 }],
       },
       {
         text: '露天礦場',
         value: 1,
-        trainingList: [{ text: '作業人員調訓', value: 1 }],
+        trainingList: [{ text: '作業人員調訓', value: 52 }],
       },
       {
         text: '石油天然氣礦場',
         value: 2,
-        trainingList: [{ text: '作業人員調訓', value: 1 }],
+        trainingList: [{ text: '作業人員調訓', value: 53 }],
       },
     ],
   },

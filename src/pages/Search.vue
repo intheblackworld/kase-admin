@@ -13,13 +13,31 @@
           class="hidden-sm-and-down"
           placeholder="請輸入姓名、身分證字號、任職單位、附屬單位、文號、流水號等關鍵字"
         ></v-text-field>
+        <v-layout>
+          <v-flex md6>
+            是否在職
+            <v-radio-group v-model="searchParams.isIncumbent" :mandatory="false">
+              <v-layout>
+                <v-flex>
+                  <v-radio label="不限" :value="null"></v-radio>
+                </v-flex>
+                <v-flex>
+                  <v-radio label="是" :value="true"></v-radio>
+                </v-flex>
+                <v-flex>
+                  <v-radio label="否" :value="false"></v-radio>
+                </v-flex>
+              </v-layout>
+            </v-radio-group>
+          </v-flex>
+        </v-layout>
         <TimeRange
-          title="任用通過日期"
+          title="任用通過日期(西元)"
           :startDate.sync="searchParams.employmentStart"
           :endDate.sync="searchParams.employmentEnd"
         />
         <TimeRange
-          title="離職通過日期"
+          title="離職通過日期(西元)"
           :startDate.sync="searchParams.resignationStart"
           :endDate.sync="searchParams.resignationEnd"
         />
@@ -62,12 +80,16 @@
           :pEnd.sync="searchParams.punishmentEnd"
         />
       </v-flex>
-      <v-btn @click="isAdvance = !isAdvance">進階搜尋設定</v-btn>
+      <v-btn @click="isAdvance = !isAdvance">{{isAdvance ? '常用搜尋設定': '進階搜尋設定'}}</v-btn>
       <v-btn @click="search">搜尋</v-btn>
     </div>
     <div v-else class="search-result">
       <v-btn @click="backToSearch">修改搜尋條件</v-btn>
-      <Table :table-options="tableOptions" :items="resultData.items"/>
+      <Table
+        :isLoading="resultData.isFetchLoading"
+        :table-options="tableOptions"
+        :items="resultData.items"
+      />
     </div>
   </div>
 </template>
@@ -86,6 +108,7 @@ import TimeRange from '@/components/TimeRange.vue'
 import Table from '@/components/Table.vue'
 
 const UsersModule = namespace('users')
+const LayoutsModule = namespace('layouts')
 
 @Component({
   components: {
@@ -101,27 +124,29 @@ export default class Search extends Vue {
   public isAdvance: boolean = false
   @UsersModule.State('search') public resultData!: {
     items: []
-    total: number,
+    total: number
+    isFetchLoading: boolean,
   }
   @UsersModule.Action('search') public searchAction!: (params: object) => {}
 
   private pageIndex = 0
-  private pageSize = 10
+  private pageSize = 10000
 
   private searchParams = {
     skip: this.pageIndex * this.pageSize, // 跳過幾筆(分頁用)
     take: this.pageSize, // 取用幾筆(分頁用)
     /* 常用搜尋 */
     keyword: '', // 常用搜尋關鍵字
+    isIncumbent: null, // 是否在職
 
     /* 任職經歷篩選 */
     organization: '', // 任職單位
     employmentNo: '', // 任用通過文號
-    employmentStart: '', // 任用通過日期起
-    employmentEnd: '', // 任用通過日期訖
+    employmentStart: '', // 任用通過日期(西元)起
+    employmentEnd: '', // 任用通過日期(西元)訖
     resignationNo: '', // 離職通過文號
-    resignationStart: '', // 離職通過日期起
-    resignationEnd: '', // 離職通過日期訖
+    resignationStart: '', // 離職通過日期(西元)起
+    resignationEnd: '', // 離職通過日期(西元)訖
     positionTitles: [], // 職位
     positionTypes: [], // 職別
 
@@ -133,17 +158,15 @@ export default class Search extends Vue {
 
     /* 訓練經歷篩選 */
     trainingType: [], // 訓練類別 0 = Ambulance 救護隊 1 = TrainingB 訓練類別2
-    trainingStart: '', // 訓練日期起
-    trainingEnd: '', // 訓練日期訖
+    trainingStart: '', // 訓練日期(西元)起
+    trainingEnd: '', // 訓練日期(西元)訖
 
     /* 處分紀錄篩選 */
     rewardPunishmentType: [], // 處分類別
     laws: [],
     jobTypes: [],
-    punishmentNo: '', // 處分文號
-    punishmentReason: '', // 處分原因
-    punishmentStart: '', // 處分日期起
-    punishmentEnd: '', // 處分日期訖
+    rewardPunishmentStart: '', // 處分日期(西元)起
+    rewardPunishmentEnd: '', // 處分日期(西元)訖
   }
 
   private isResult = false
@@ -183,7 +206,7 @@ export default class Search extends Vue {
   }
 
   public search() {
-    this.searchAction({...this.searchParams})
+    this.searchAction({ ...this.searchParams })
     this.isResult = true
   }
 

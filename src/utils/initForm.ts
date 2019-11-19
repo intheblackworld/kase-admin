@@ -3,7 +3,7 @@ export const basicInit = {
   personStatus: 0, // 身分註記* 無 原住民 外籍人士
   personNo: '', // 身分證字號*(外籍人士請填護照號碼)
   cardNo: '', // 卡  號*
-  birthday: '', //  出生日期*
+  birthday: '', //  出生日期(西元)*
   gender: 0, // 性  別*
   deathDate: '', // 性  別*
   permanentAddress: '', // 戶籍地址*
@@ -14,7 +14,7 @@ export const basicInit = {
   educationLevel: 0, // 最高學歷
   educationOther: '', // 其他學歷
   insuranceNo: '', // 勞(公)保證號
-  insuranceDate: '', // 投保日期
+  insuranceDate: '', // 投保日期(西元)
   identityAttaches: [], // 身分證明文件
   educationAttaches: [], // 學歷證明文件
   otherAttaches: [], // 其他相關附件
@@ -33,8 +33,8 @@ export const incumbentInit = {
   resignationNo: '',
   resignationDate: '',
   certificateNo: '',
-  incumbentFile: [],
-  incumbentFileName: '',
+  otherAttaches: [],
+  otherAttachesName: '',
   isShowIncumbentPositionTitle: false,
 }
 
@@ -44,13 +44,13 @@ export const trainingInit = {
   positionTrainingType: 0, // 課程種類
   mineType: 0, // 礦場類別
   trainingType: 0, // 訓練課程類別
-  years: 0, // 年度
+  years: 0, // 年度(民國)
   periodType: 0, // 期別 3: 自訂期次 1, 4: 自訂期次 2, 5: 自訂期次 3 依此類推
   customPeriod: 0,
-  trainingStart: '', // 訓練起始日期
-  trainingEnd: '', // 訓練結束日期
-  trainingFile: [], // 附件上傳
-  trainingFileName: '', // 附件顯示名稱
+  trainingStart: '', // 訓練起始日期(西元)
+  trainingEnd: '', // 訓練結束日期(西元)
+  otherAttaches: [], // 附件上傳
+  otherAttachesName: '', // 附件顯示名稱
   isShowCustomPeriodSelect: false, // 是否顯示自訂期次下拉選單
 }
 
@@ -58,7 +58,7 @@ export const qualificationInit = {
   qualification: 0, // 資格類別
   certificateNo: '', // 證明書字號
   compliance: '', // 符合條款
-  issueDate: '', // 發證日期
+  issueDate: '', // 發證日期(西元)
   otherAttaches: [], // 附件上傳
   qualificationFileName: '',
 }
@@ -67,10 +67,10 @@ export const rewardInit = {
   jobAttr: 0, // 職務屬性
   rewardType: 0, // 獎懲種類及額度
   legalBasis: 0, // 法令依據
-  rewardDate: '', // 獎懲日期
-  rewardDesc: '', // 獎懲事實
-  rewardFile: [], // 附件上傳
-  rewardFileName: '', // 附件顯示名稱
+  rewardDate: '', // 獎懲日期(西元)
+  rewardDesc: 0, // 獎懲事實
+  otherAttaches: [], // 附件上傳
+  otherAttachesName: '', // 附件顯示名稱
 }
 
 export const createRequestData = {
@@ -79,7 +79,7 @@ export const createRequestData = {
     personStatus: 0, // 身分註記* 無 原住民 外籍人士
     personNo: '', // 身分證字號*(外籍人士請填護照號碼)
     cardNo: '', // 卡  號*
-    birthday: '', //  出生日期*
+    birthday: '', //  出生日期(西元)*
     gender: '', // 性  別*
     deathDate: '', // 性  別*
     permanentAddress: '', // 戶籍地址*
@@ -90,7 +90,7 @@ export const createRequestData = {
     educationLevel: 0, // 最高學歷
     educationOther: '', // 其他學歷
     insuranceNo: '', // 勞(公)保證號
-    insuranceDate: '', // 投保日期
+    insuranceDate: '', // 投保日期(西元)
     identityAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 身分證明文件
     educationAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 學歷證明文件
     otherAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 其他相關附件
@@ -106,13 +106,13 @@ export const createRequestData = {
       positionTitle: 0, // 職稱
       positionType: 0, // 職別
       employmentNo: '', // 任用通過文號
-      employmentStart: '', // 任用通過日期起
-      employmentEnd: '', // 任用通過日期訖
+      employmentStart: '', // 任用通過日期(西元)起
+      employmentEnd: '', // 任用通過日期(西元)訖
       resignationNo: '', // 離職通過文號
-      resignationStart: '', // 離職通過日期起
-      resignationEnd: '', // 離職通過日期訖
+      resignationStart: '', // 離職通過日期(西元)起
+      resignationEnd: '', // 離職通過日期(西元)訖
       certificateNo: '', // 證書字號
-      incumbentFile: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
+      otherAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
     },
   ],
   trainings: [
@@ -122,12 +122,12 @@ export const createRequestData = {
       positionTrainingType: 0, // 課程種類
       mineType: 0, // 礦場類別
       trainingType: 0, // 訓練課程類別
-      years: 0, // 年度
+      years: 0, // 年度(民國)
       periodType: 0, // 期別 3: 自訂期次 1, 4: 自訂期次 2, 5: 自訂期次 3 依此類推
       customPeriod: 0,
-      trainingStart: '', // 訓練起始日期
-      trainingEnd: '', // 訓練結束日期
-      trainingFile: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
+      trainingStart: '', // 訓練起始日期(西元)
+      trainingEnd: '', // 訓練結束日期(西元)
+      otherAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
     },
   ],
   qualifications: [
@@ -135,7 +135,7 @@ export const createRequestData = {
       qualification: 0, // 資格類別
       certificateNo: '', // 證明書字號
       compliance: '', // 符合條款
-      issueDate: '', // 發證日期
+      issueDate: '', // 發證日期(西元)
       otherAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
     },
   ],
@@ -144,9 +144,9 @@ export const createRequestData = {
       jobAttr: 0, // 職務屬性
       rewardType: 0, // 獎懲種類及額度
       legalBasis: 0, // 法令依據
-      rewardDate: '', // 獎懲日期
-      rewardDesc: '', // 獎懲事實
-      rewardFile: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
+      rewardDate: '', // 獎懲日期(西元)
+      rewardDesc: 0, // 獎懲事實
+      otherAttaches: [{name: 'xxx', url: 'data:image/png;base64xxx'}], // 附件上傳
     },
   ],
 }

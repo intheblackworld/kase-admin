@@ -3,17 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --mode development",
+    "dev-build": "vue-cli-service build --mode development",
+    "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@riophae/vue-treeselect": "^0.3.0",
     "@types/lodash": "^4.14.134",
     "@types/qs": "^6.5.3",
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "dayjs": "^1.8.14",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "qs": "^6.7.0",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",

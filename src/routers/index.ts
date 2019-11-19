@@ -5,11 +5,11 @@ import Home from '@/pages/Home.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/download',
       name: 'home',
       component: Home,
     },
@@ -38,7 +38,7 @@ export default new Router({
         import(/* webpackChunkName: "login" */ '@/pages/Login.vue'),
     },
     {
-      path: '/search',
+      path: '/',
       name: 'search',
       // route level code-splitting
       // which is lazy-loaded when the route is visited.
