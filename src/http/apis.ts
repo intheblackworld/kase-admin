@@ -75,10 +75,10 @@ export const create = (data: any) => post('/api/person/insert', data)
 
 export const search = (req: object) => post(`api/person/search`, req)
 
-// const authUrl = 'https://www.kase.com.tw/MOEA_Auth/'
-const authUrl = 'https://mims.mine.gov.tw/AuthService/'
-// const outerUrl = 'https://www.kase.com.tw/MOEA_MIMS/'
-const outerUrl = 'https://mims.mine.gov.tw/MineMIMSBackend/'
+const authUrl = 'https://www.kase.com.tw/MOEA_Auth/'
+// const authUrl = 'https://mims.mine.gov.tw/AuthService/'
+const outerUrl = 'https://www.kase.com.tw/MOEA_MIMS/'
+// const outerUrl = 'https://mims.mine.gov.tw/MineMIMSBackend/'
 
 export const login = () =>
   post(`${authUrl}api/login/`, {
@@ -93,8 +93,10 @@ export const login = () =>
     'exp': 1560346273,
     'iss': 'MOAE',
     'aud': 'Auth',
+    // 'returnUrl': `${location.href}`,
   })
-
+// export const loginK = () =>
+//   post(`${authUrl}api/Login/`, { returnUrl: location.href })
 export const logout = () =>
   get(`${authUrl}api/logout/`, {})
 
@@ -103,7 +105,11 @@ export const getOuterData = () =>
 
 // 檢驗卡號身分證
 export const hasCardNo = (cardNo: string, employeeId: string) =>
-  post('/api/person/hasCardNo', { cardNo, employeeId})
+  post('/api/person/hasCardNo', { cardNo, employeeId })
 
 export const hasPersonNo = (personNo: string, employeeId: string) =>
   post('/api/person/hasPersonNo', { personNo, employeeId })
+
+
+export const report = (data: object, url: string) =>
+  post(`/api/Report/${url}`, data)

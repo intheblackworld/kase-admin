@@ -71,6 +71,7 @@ export default class App extends Vue {
   @LayoutsModule.Action('getOuterData')
   public getOuterData!: () => {}
   @LayoutsModule.Action('login') public login!: () => {}
+  @LayoutsModule.Action('loginK') public loginK!: () => {}
 
   @LayoutsModule.Getter('isManager') public isManager!: boolean
   private items = [
@@ -81,6 +82,7 @@ export default class App extends Vue {
   public async created() {
     if (!this.token) {
       this.login()
+      // this.loginK()
     }
   }
 
