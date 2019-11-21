@@ -404,18 +404,6 @@ export default class Home extends Vue {
     };
   };
   public async makeReoprt(api: any, url: string, name: string) {
-    // await axios.post(`/api/Report/${url}`, api, { responseType: 'blob' })
-    //   .then((response) => {
-    //     const url = window.URL.createObjectURL(new Blob([response.data]));
-    //     const link = document.createElement('a');
-    //     link.href = url;
-    //     link.setAttribute('download', name + '.xls');
-    //     document.body.appendChild(link);
-    //     link.click();
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
     await axios.post(`/api/Report/${url}`, api, { responseType: 'blob' })
       .then((response) => {
         const downloadElement = document.createElement('a')
@@ -427,25 +415,10 @@ export default class Home extends Vue {
         document.body.removeChild(downloadElement) // 下載完成移除元素
         window.URL.revokeObjectURL(href) // 釋放掉blob物件
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
-    // await report(api, url).then((res: any) => {
-    //   const blob = new Blob([res.data])
-    //   // 針對於IE瀏覽器的處理, 因部分IE瀏覽器不支援createObjectURL
-    //   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-    //     window.navigator.msSaveOrOpenBlob(blob, name + '.xls')
-    //   } else {
-    //     const downloadElement = document.createElement('a')
-    //     const href = window.URL.createObjectURL(blob) // 建立下載的連結
-    //     downloadElement.href = href
-    //     downloadElement.download = name + '.xls' // 下載後檔名
-    //     document.body.appendChild(downloadElement)
-    //     downloadElement.click() // 點選下載
-    //     document.body.removeChild(downloadElement) // 下載完成移除元素
-    //     window.URL.revokeObjectURL(href) // 釋放掉blob物件
-    //   }
-    // });
+
   }
   public async download() {
     if (this.selected && this.selected.length > 0) {
