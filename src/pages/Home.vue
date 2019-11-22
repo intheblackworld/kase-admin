@@ -200,10 +200,14 @@ export default class Home extends Vue {
   private table: ReportTable[] = [];
   private selected: ReportTable[] = [];
 
-  @Watch('yyearStarta')
+  @Watch('yearStart')
   @Watch('yearEnd')
   public onYearChange() {
     // 比較時間大小 防呆
+    if (this.yearEnd < this.yearStart) {
+      alert('結束年份不可小於開始年分')
+      this.yearEnd = this.yearStart;
+    }
   }
 
 
