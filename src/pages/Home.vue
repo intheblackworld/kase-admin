@@ -16,12 +16,14 @@
                 <v-flex md2>
                     <h3>依年分查詢報表</h3>
                 </v-flex>
+                <v-flex md1>起</v-flex>
                 <v-flex md2>
                     <v-select :items="years"
                               v-model="yearStart"></v-select>
                 </v-flex>
                 <v-flex md1>年</v-flex>
                 <v-flex md1>~</v-flex>
+                <v-flex md1>訖</v-flex>
                 <v-flex md2>
                     <v-select :items="years"
                               v-model="yearEnd"></v-select>
