@@ -37,6 +37,25 @@
                 </v-btn>
             </v-layout>
         </v-card>
+        <v-flex class="flex layout row wrap">
+            <v-flex mb2
+                    lg2
+                    xs12
+                    shrink>
+                <v-subheader class="form-label">下載類型*</v-subheader>
+            </v-flex>
+            <v-flex lg2
+                    md2
+                    xs3
+                    class="mutlCheck"
+                    mt-2
+                    v-for="item in DownloadTypes">
+                <v-checkbox class="checkBoxLabel ma-0"
+                            v-model="Dtypes"
+                            :label="item.label"
+                            :value="item.value"></v-checkbox>
+            </v-flex>
+        </v-flex>
         <v-card class='mt-2'>
             <v-data-table :headers="reportHeader"
                           :items="table"
@@ -94,7 +113,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import Pannel from '@/components/Pannel.vue' // @ is an alias to /src
 import { report } from '@/http/apis'
 import axios from 'axios'
-
+import * as XLSX from 'xlsx';
 export class Report {
   public name: string;
   public time: string;
@@ -138,7 +157,7 @@ interface ReportTable {
     Pannel,
   },
 })
-export default class Home extends Vue {
+export default class StaffReport extends Vue {
   // 現在時間
   get Now() {
     const now = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
@@ -147,6 +166,15 @@ export default class Home extends Vue {
       month: now.substr(5, 2).match(/[0-9]+/),
     }
   }
+  // 報表下載類型
+  public DownloadTypes = [
+    { label: 'csv', value: { bookType: 'csv', bookSST: false, type: 'binary' } },
+    { label: 'ods', value: { bookType: 'ods', bookSST: false, type: 'binary' } },
+    { label: 'xlsx', value: { bookType: 'xlsx', bookSST: false, type: 'binary' } },
+  ]
+  public Dtypes: XLSX.WritingOptions = {};
+
+
   private hide: boolean = false;
   private pagination = {
     sortBy: 'name',
@@ -410,11 +438,16 @@ export default class Home extends Vue {
     };
   };
   public async makeReoprt(api: any, url: string, name: string) {
+    let wbop = this.DownloadTypes[1].value as XLSX.WritingOptions;
     await axios.post(`/api/Report/${url}`, api, { responseType: 'blob' })
       .then((response) => {
         const downloadElement = document.createElement('a')
         const href = window.URL.createObjectURL(new Blob([response.data]));
+        let wb = XLSX.read(new Blob([response.data]))
+        XLSX.writeFile(wb, name, wbop)
         downloadElement.href = href
+
+
         downloadElement.download = name + '.xls' // 下載後檔名
         document.body.appendChild(downloadElement)
         downloadElement.click() // 點選下載

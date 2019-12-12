@@ -175,12 +175,14 @@ export default {
     },
 
     async login(context: any) {
+      console.log('data');
       login().then((data: any) => {
+        console.log(data);
         // 1. 沒有 token 就打這隻 API
         // 2. 回傳網址就轉址
         // 3. 回傳 token 就解析然後儲存
         const token = data.token
-
+        console.log(token);
         if (token) {
           const decode = jwtDecode(token)
           // console.log(context)

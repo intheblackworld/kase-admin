@@ -81,7 +81,7 @@ const outerUrl = 'https://www.kase.com.tw/MOEA_MIMS/'
 // const outerUrl = 'https://mims.mine.gov.tw/MineMIMSBackend/'
 
 export const login = () =>
-  post(`${authUrl}api/login/`, {
+  post(`${authUrl}api/Login/`, {
     'nameid': 'aallom4j',
     'given_name': 'Adriena Allom',
     'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': [
@@ -93,8 +93,9 @@ export const login = () =>
     'exp': 1560346273,
     'iss': 'MOAE',
     'aud': 'Auth',
-    // 'returnUrl': `${location.href}`,
+    //'returnUrl': `${location.href}`,
   })
+
 // export const loginK = () =>
 //   post(`${authUrl}api/Login/`, { returnUrl: location.href })
 export const logout = () =>

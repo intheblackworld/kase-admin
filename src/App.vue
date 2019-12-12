@@ -80,6 +80,8 @@ export default class App extends Vue {
     { title: '報表下載', icon: 'table', link: '/download' },
   ]
   public async created() {
+    console.log('created')
+    console.log(this.token)
     if (!this.token) {
       this.login()
       // this.loginK()
