@@ -1,76 +1,80 @@
 <template>
-  <div>
-    <v-data-table
-      :loading="isLoading"
-      :headers="headers"
-      :items="items"
-      class
-      no-data-text="查無結果"
-      rows-per-page-text="每頁資料筆數"
-      :rows-per-page-items="rowsPerPageItems"
-    >
-      <template v-slot:items="props">
-        <td
-          v-show="(column.key !== `${name}ResponseId` && column.key !== 'responseId') && column.key !== 'employeeId'"
-          class="text-xs-center"
-          v-for="(column, index) in tableOptions.columns"
-          :key="`${column.key}-${index}`"
-          v-html="handleDataValue(column, props)"
-        ></td>
-
-        <!-- <td v-if="tableOptions.control === 'link'" class="text-xs-center">
+    <div>
+        <v-data-table :loading="isLoading"
+                      :headers="headers"
+                      :items="items"
+                      class
+                      no-data-text="查無結果"
+                      rows-per-page-text="每頁資料筆數"
+                      :rows-per-page-items="rowsPerPageItems">
+            <template v-slot:items="props">
+                <td v-show="(column.key !== `${name}ResponseId` && column.key !== 'responseId') && column.key !== 'employeeId'  && column.key !== 'otherAttaches'"
+                    class="text-xs-center"
+                    v-for="(column, index) in tableOptions.columns"
+                    :key="`${column.key}-${index}`"
+                    v-html="handleDataValue(column, props)"></td>
+                <td v-show="props && props.item && props.item.otherAttaches">
+                    <v-tooltip bottom
+                               v-for='paper in props.item.otherAttaches'>
+                        <template v-slot:activator="{ on }">
+                            <v-icon @click="download(paper)"
+                                    v-on="on">cloud_download</v-icon>
+                        </template>
+                        <span>{{paper.name}}</span>
+                    </v-tooltip>
+                </td>
+                <!-- <td v-if="tableOptions.control === 'link'" class="text-xs-center">
         <v-icon @click="enterProfile(props.item.employeeId)">account_circle</v-icon>
         </td>-->
-        <td v-if="tableOptions.control" class="text-xs-center">
-          <v-icon
-            v-for="(action) in tableOptions.control.split(',')"
-            :key="`${props.item[`${name}ResponseId`]}-${action}-${1}`"
-            v-show="action === 'see'"
-            @click="showCheckDialog(props.item[`${name}ResponseId`])"
-          >search</v-icon>
-          <v-icon
-            v-for="(action) in tableOptions.control.split(',')"
-            :key="`${props.item[`responseId`]}-${action}-${1}`"
-            v-show="action === 'detail'"
-            @click="showDialog(props.item[`responseId`], props.item.category)"
-          >format_list_bulleted</v-icon>
-          <v-icon
-            v-for="(action) in tableOptions.control.split(',')"
-            :key="`${props.item[`${name}ResponseId`]}-${action}-${2}`"
-            v-show="action === 'edit' && isManager"
-            @click="showDialog(props.item[`${name}ResponseId`])"
-          >edit</v-icon>
-          <v-icon
-            v-for="(action) in tableOptions.control.split(',')"
-            :key="`${props.item[`${name}ResponseId`]}-${action}-${3}`"
-            v-show="action === 'link'"
-            @click="enterProfile(props.item.employeeId)"
-          >account_circle</v-icon>
-          <v-icon
-            v-for="(action) in tableOptions.control.split(',')"
-            :key="`${props.item[`${name}ResponseId`]}-${action}-${4}`"
-            v-show="action === 'delete' && isManager"
-            @click="deleteProfile(props.item[`${name}ResponseId`], )"
-          >delete</v-icon>
-        </td>
-      </template>
-    </v-data-table>
-    <v-layout v-if="tableOptions.control.includes('create') && isManager" justify-end align-center>
-      新增一筆資料
-      <v-icon @click="showDialog">add</v-icon>
-    </v-layout>
-    <v-dialog v-model="deleteDialog" persistent max-width="290">
-      <v-card>
-        <v-card-title class="headline">確定刪除?</v-card-title>
-        <!-- <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text> -->
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat @click="deleteProfile(deleteId, true)">確定</v-btn>
-          <v-btn color="green darken-1" flat @click="deleteDialog = false">取消</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
+                <td v-if="tableOptions.control"
+                    class="text-xs-center">
+                    <v-icon v-for="(action) in tableOptions.control.split(',')"
+                            :key="`${props.item[`${name}ResponseId`]}-${action}-${1}`"
+                            v-show="action === 'see'"
+                            @click="showCheckDialog(props.item[`${name}ResponseId`])">search</v-icon>
+                    <v-icon v-for="(action) in tableOptions.control.split(',')"
+                            :key="`${props.item[`responseId`]}-${action}-${1}`"
+                            v-show="action === 'detail'"
+                            @click="showDialog(props.item[`responseId`], props.item.category)">format_list_bulleted</v-icon>
+                    <v-icon v-for="(action) in tableOptions.control.split(',')"
+                            :key="`${props.item[`${name}ResponseId`]}-${action}-${2}`"
+                            v-show="action === 'edit' && isManager"
+                            @click="showDialog(props.item[`${name}ResponseId`])">edit</v-icon>
+                    <v-icon v-for="(action) in tableOptions.control.split(',')"
+                            :key="`${props.item[`${name}ResponseId`]}-${action}-${3}`"
+                            v-show="action === 'link'"
+                            @click="enterProfile(props.item.employeeId)">account_circle</v-icon>
+                    <v-icon v-for="(action) in tableOptions.control.split(',')"
+                            :key="`${props.item[`${name}ResponseId`]}-${action}-${4}`"
+                            v-show="action === 'delete' && isManager"
+                            @click="deleteProfile(props.item[`${name}ResponseId`], )">delete</v-icon>
+                </td>
+            </template>
+        </v-data-table>
+        <v-layout v-if="tableOptions.control.includes('create') && isManager"
+                  justify-end
+                  align-center>
+            新增一筆資料
+            <v-icon @click="showDialog">add</v-icon>
+        </v-layout>
+        <v-dialog v-model="deleteDialog"
+                  persistent
+                  max-width="290">
+            <v-card>
+                <v-card-title class="headline">確定刪除?</v-card-title>
+                <!-- <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text> -->
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1"
+                           flat
+                           @click="deleteProfile(deleteId, true)">確定</v-btn>
+                    <v-btn color="green darken-1"
+                           flat
+                           @click="deleteDialog = false">取消</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </div>
 </template>
 
 <style lang="scss" scoped>
@@ -81,6 +85,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Action, Mutation, namespace } from 'vuex-class'
 import { formatDate } from '@/utils/methods'
 import _ from 'lodash'
+import { get } from '../http/axios'
+import axios from 'axios'
 
 const LayoutsModule = namespace('layouts')
 
@@ -160,6 +166,20 @@ export default class Table extends Vue {
 
     this.$emit('deleteRow', id)
   }
+  public async download(paper: any) {
+    let Downloadthing;
+    await axios.get(`/api/file/${paper.id}`, {}).then((Response) => {
+      Downloadthing = Response.data;
+    });
+    const downloadElement = document.createElement('a')
+    const href = Downloadthing[0].url
+    downloadElement.href = href
+    downloadElement.download = Downloadthing[0].name
+    document.body.appendChild(downloadElement)
+    downloadElement.click()
+    document.body.removeChild(downloadElement)
+    window.URL.revokeObjectURL(href)
+  }
 
   public handleDataValue(column: { key: string }, props: { item: any }) {
     let value
@@ -189,19 +209,19 @@ export default class Table extends Vue {
         value = ''
       }
     } else if (column.key.includes('otherAttaches')) {
-      if (props.item[column.key] === null) {
-        value = ''
-      } else {
-        if (props.item[column.key].length === 0) {
-          value = ''
-        } else {
-          value = props.item[column.key]
-            .map((item: any) => {
-              return `<a href="${item.url}" download="${item.name}">${item.name}</a>`
-            })
-            .join('<br />')
-        }
-      }
+      // if (props.item[column.key] === null) {
+      //   value = ''
+      // } else {
+      //   if (props.item[column.key].length === 0) {
+      //     value = ''
+      //   } else {
+      //     value = props.item[column.key]
+      //       .map((item: any) => {
+      //         return `<a href="${item.url}" download="${item.name}">${item.name}</a>`
+      //       })
+      //       .join('<br />')
+      //   }
+      // }
     } else {
       if (column.key.includes('Date')) {
         if (props.item[column.key]) {

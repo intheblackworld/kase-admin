@@ -36,26 +36,29 @@
                     查詢
                 </v-btn>
             </v-layout>
+            <v-flex class="flex layout row wrap">
+                <v-flex md2
+                        lign-center
+                        justify-center>
+                    <h3>下載類型*</h3>
+                </v-flex>
+                <v-flex lg2
+                        md2
+                        xs3
+                        layout
+                        row
+                        class="mutlCheck">
+                    <v-radio-group v-model="Dtypes"
+                                   v-for="item in DownloadTypes">
+                        <v-radio class="checkBoxLabel ma-0"
+                                 :label="item.label"
+                                 hide-details
+                                 :value="item.value"></v-radio>
+                    </v-radio-group>
+                </v-flex>
+            </v-flex>
         </v-card>
-        <v-flex class="flex layout row wrap">
-            <v-flex mb2
-                    lg2
-                    xs12
-                    shrink>
-                <v-subheader class="form-label">下載類型*</v-subheader>
-            </v-flex>
-            <v-flex lg2
-                    md2
-                    xs3
-                    class="mutlCheck"
-                    mt-2
-                    v-for="item in DownloadTypes">
-                <v-checkbox class="checkBoxLabel ma-0"
-                            v-model="Dtypes"
-                            :label="item.label"
-                            :value="item.value"></v-checkbox>
-            </v-flex>
-        </v-flex>
+
         <v-card class='mt-2'>
             <v-data-table :headers="reportHeader"
                           :items="table"
@@ -168,11 +171,11 @@ export default class StaffReport extends Vue {
   }
   // 報表下載類型
   public DownloadTypes = [
-    { label: 'csv', value: { bookType: 'csv', bookSST: false, type: 'binary' } },
+    // { label: 'csv', value: { bookType: 'csv', bookSST: false, type: 'binary' } },
     { label: 'ods', value: { bookType: 'ods', bookSST: false, type: 'binary' } },
     { label: 'xlsx', value: { bookType: 'xlsx', bookSST: false, type: 'binary' } },
   ]
-  public Dtypes: XLSX.WritingOptions = {};
+  public Dtypes: XLSX.WritingOptions = { bookType: 'xlsx', bookSST: false, type: 'binary' };
 
 
   private hide: boolean = false;
@@ -438,31 +441,43 @@ export default class StaffReport extends Vue {
     };
   };
   public async makeReoprt(api: any, url: string, name: string) {
-    let wbop = this.DownloadTypes[1].value as XLSX.WritingOptions;
-    await axios.post(`/api/Report/${url}`, api, { responseType: 'blob' })
+    const wbop = this.Dtypes;
+    let arraybuffer;
+    await axios.post(`/api/Report/${url}`, api, { responseType: 'arraybuffer' })
       .then((response) => {
-        const downloadElement = document.createElement('a')
-        const href = window.URL.createObjectURL(new Blob([response.data]));
-        let wb = XLSX.read(new Blob([response.data]))
-        XLSX.writeFile(wb, name, wbop)
-        downloadElement.href = href
-
-
-        downloadElement.download = name + '.xls' // 下載後檔名
-        document.body.appendChild(downloadElement)
-        downloadElement.click() // 點選下載
-        document.body.removeChild(downloadElement) // 下載完成移除元素
-        window.URL.revokeObjectURL(href) // 釋放掉blob物件
+        // if (this.Dtypes.bookType === 'xlsx') {
+        //   const downloadElement = document.createElement('a')
+        //   const href = window.URL.createObjectURL(new Blob([response.data]));
+        //   downloadElement.href = href
+        //   downloadElement.download = name + '.xls' // 下載後檔名
+        //   document.body.appendChild(downloadElement)
+        //   downloadElement.click() // 點選下載
+        //   document.body.removeChild(downloadElement) // 下載完成移除元素
+        //   window.URL.revokeObjectURL(href) // 釋放掉blob物件
+        // }
+        arraybuffer = response.data;
+        // // call 'xlsx' to read the file
+        // let wb = XLSX.read(binary, { type: 'binary', cellDates: true, cellStyles: true });
+        // XLSX.writeFile(wb, name, wbop)
       })
       .catch((error) => {
         console.log(error);
       });
+    if (arraybuffer) {
+      const data = new Uint8Array(arraybuffer);
+      const arr = new Array();
+      for (let i = 0; i !== data.length; ++i) {
+        arr[i] = String.fromCharCode(data[i]);
+      }
+      const bstr = arr.join('');
+      const workbook = XLSX.read(bstr, { type: 'binary' });
+      XLSX.writeFile(workbook, name, wbop)
 
+    }
   }
   public async download() {
     if (this.selected && this.selected.length > 0) {
-      const name = this.selected[0].name + this.selected[0].time;
-      const apis = this.selected.map((obj) => {
+      const apis = this.selected.map((obj, index) => {
         return {
           url: obj.api.url,
           param: {
@@ -471,10 +486,11 @@ export default class StaffReport extends Vue {
             format: 0,
             isShowPersonalCapital: this.hide,
           },
+          name: this.selected[index].name + this.selected[index].time + '.' + this.Dtypes.bookType,
         }
       });
       apis.map((obj) => {
-        this.makeReoprt(obj.param, obj.url, name);
+        this.makeReoprt(obj.param, obj.url, obj.name);
       })
     }
   }

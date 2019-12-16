@@ -50,7 +50,7 @@ export default {
 
     isManager: (state: { info: any }) =>
       state.info[
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+      'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
       ] &&
       state.info[
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
@@ -177,12 +177,12 @@ export default {
     async login(context: any) {
       console.log('data');
       login().then((data: any) => {
-        console.log(data);
         // 1. 沒有 token 就打這隻 API
         // 2. 回傳網址就轉址
         // 3. 回傳 token 就解析然後儲存
         const token = data.token
-        console.log(token);
+        // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhaDk2NzYiLCJnaXZlbl9uYW1lIjoi5ZCz5LuL5a6HIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIlBlb3BsZS5TZWFyY2giLCJQdWJPcC5DcmVhdGVyX0xlZ2lzbGF0aXZlWWFuIiwiUHViT3AuQ3JlYXRlcl9QdWJPUCJdLCJleHAiOjE1NzY1MTEyNjMsImlzcyI6Ik1PRUEiLCJhdWQiOiJBdXRoIn0.r8SgUIIneFa-lQYGypGkyfrZ1KuYjwC5nn3ZID3n_2U"
+
         if (token) {
           const decode = jwtDecode(token)
           // console.log(context)

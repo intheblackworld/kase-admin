@@ -1,4 +1,5 @@
 import { get, post } from './axios'
+
 // 人員資料頁
 export const getBasic = (employeeId: string) =>
   get(`api/person/${employeeId}`, {})
@@ -75,25 +76,36 @@ export const create = (data: any) => post('/api/person/insert', data)
 
 export const search = (req: object) => post(`api/person/search`, req)
 
-const authUrl = 'https://www.kase.com.tw/MOEA_Auth/'
+// const authUrl = 'https://www.kase.com.tw/MOEA_Auth/'
 // const authUrl = 'https://mims.mine.gov.tw/AuthService/'
-const outerUrl = 'https://www.kase.com.tw/MOEA_MIMS/'
+// const outerUrl = 'https://www.kase.com.tw/MOEA_MIMS/'
 // const outerUrl = 'https://mims.mine.gov.tw/MineMIMSBackend/'
+const devApi = 'https://www.kase.com.tw/MOEA_Auth/'
+const prdApi = 'https://mims.mine.gov.tw/AuthService/'
+const devOuterApi = 'https://www.kase.com.tw/MOEA_MIMS/'
+const prdOuterApi = 'https://mims.mine.gov.tw/MineMIMSBackend/'
+
+
+const authUrl = process.env.NODE_ENV === 'development' ? devApi : prdApi
+const outerUrl = process.env.NODE_ENV === 'development' ? devOuterApi : prdOuterApi
 
 export const login = () =>
-  post(`${authUrl}api/Login/`, {
-    'nameid': 'aallom4j',
-    'given_name': 'Adriena Allom',
-    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': [
-      'Billboard.Manage',
-      'Permission.Manage',
-      'People.Manage',
-      'People.Search',
-    ],
-    'exp': 1560346273,
-    'iss': 'MOAE',
-    'aud': 'Auth',
-    //'returnUrl': `${location.href}`,
+  // axios.post(`${authUrl}api/Login/`, {
+  //   'returnUrl': `${location.href}`,
+  //   })
+  post(`${authUrl}api/login/`, {
+    // 'nameid': 'aallom4j',
+    // 'given_name': 'Adriena Allom',
+    // 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': [
+    //   'Billboard.Manage',
+    //   'Permission.Manage',
+    //   'People.Manage',
+    //   'People.Search',
+    // ],
+    // 'exp': 1560346273,
+    // 'iss': 'MOAE',
+    // 'aud': 'Auth',
+    // returnUrl: `${location.href}`,
   })
 
 // export const loginK = () =>
