@@ -209,7 +209,7 @@ export default class Reward extends mixins(CreateMixin) {
   ) {
     return rewardTypes.filter((rewardType) => {
       if (rewardType.index) {
-        return rewardType.index.split('-')[0] === index
+        return rewardType.index.split('-')[0] === `${index}`
       } else {
         return false
       }
@@ -228,8 +228,8 @@ export default class Reward extends mixins(CreateMixin) {
     return lawsTypes.filter((lawsType) => {
       if (lawsType.index) {
         return (
-          lawsType.index.split('-')[0] === jobIndex &&
-          lawsType.index.split('-')[1] === rewardIndex
+          lawsType.index.split('-')[0] === `${jobIndex}` &&
+          lawsType.index.split('-')[1] === `${rewardIndex}`
         )
       } else {
         return false
@@ -246,9 +246,9 @@ export default class Reward extends mixins(CreateMixin) {
     return lawsDescTypes.filter((lawsDescType) => {
       if (lawsDescType.index) {
         return (
-          lawsDescType.index.split('-')[0] === jobIndex &&
-          lawsDescType.index.split('-')[1] === rewardIndex &&
-          lawsDescType.index.split('-')[2] === lawsIndex
+          lawsDescType.index.split('-')[0] === `${jobIndex}` &&
+          lawsDescType.index.split('-')[1] === `${rewardIndex}` &&
+          lawsDescType.index.split('-')[2] === `${lawsIndex}`
         )
       } else {
         return false
