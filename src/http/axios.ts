@@ -6,7 +6,7 @@ import QS from 'qs'
 import router from '@/routers'
 import store from '@/store'
 const devApi = 'https://www.kase.com.tw/MOEA_People/'
-const prdApi = 'http://mims.mine.gov.tw/MinePeopleBackend'
+const prdApi = 'https://mims.mine.gov.tw/MinePeopleBackend'
 
 const baseURL = process.env.NODE_ENV === 'development' ? devApi : prdApi
 
