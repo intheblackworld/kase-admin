@@ -94,18 +94,18 @@ export const login = () =>
   //   'returnUrl': `${location.href}`,
   //   })
   post(`${authUrl}api/login/`, {
-    // 'nameid': 'aallom4j',
-    // 'given_name': 'Adriena Allom',
-    // 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': [
-    //   'Billboard.Manage',
-    //   'Permission.Manage',
-    //   'People.Manage',
-    //   'People.Search',
-    // ],
-    // 'exp': 1560346273,
-    // 'iss': 'MOAE',
-    // 'aud': 'Auth',
-    // returnUrl: `${location.href}`,
+    'nameid': 'aallom4j',
+    'given_name': 'Adriena Allom',
+    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': [
+      'Billboard.Manage',
+      'Permission.Manage',
+      'People.Manage',
+      'People.Search',
+    ],
+    'exp': 1560346273,
+    'iss': 'MOAE',
+    'aud': 'Auth',
+    'returnUrl': `${location.href}`,
   })
 
 // export const loginK = () =>
