@@ -76,12 +76,10 @@ export default class App extends Vue {
   @LayoutsModule.Getter('isManager') public isManager!: boolean
   private items = [
     { title: '人員資料搜尋', icon: 'search', link: '/' },
-    { title: '新增人員資料', icon: 'contacts', link: '/create' },
+    { title: '新增人員資料', icon: 'contacts', link: 'create' },
     { title: '報表下載', icon: 'table', link: '/download' },
   ]
   public async created() {
-    console.log('created')
-    console.log(this.token)
     if (!this.token) {
       this.login()
       // this.loginK()

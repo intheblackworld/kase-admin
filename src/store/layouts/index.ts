@@ -180,12 +180,17 @@ export default {
         // 2. 回傳網址就轉址
         // 3. 回傳 token 就解析然後儲存
         const token = data.token
-
+        // const token
         if (token) {
           const decode = jwtDecode(token)
           // console.log(context)
           context.commit('setToken', token)
-          context.commit('setLoginInfo', decode)
+          context.commit('setLoginInfo', decode) // 拿到權限
+          const authList = decode['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+          if (!authList.includes('People.Search') && !authList.includes('People.Manage')) {
+            window.location.href = 'https://www.kase.com.tw/MOEA_Auth/Main'
+          }
+
           context.dispatch('getEditType') // 編修總類
           context.dispatch('getEducationLevel') // 學歷選項
           context.dispatch('getGender') // 性別選項
